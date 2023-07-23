@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Archivum.ViewModels"
+             x:Class="Archivum.Views.TextStatistick"
+             Title="TextStatistick">
+    <ContentPage.BindingContext>
+        <local:TextStatistickViewModel/>
+    </ContentPage.BindingContext>
+    <VerticalStackLayout>
+        <HorizontalStackLayout>
+            <Label  Text="Всего"/>
+            <Label  Text="{Binding AllCount}"/>
+
+        </HorizontalStackLayout>
+        <HorizontalStackLayout>
+            <Label  Text="книги"/>
+            <Label  Text="{Binding BooksCount}"/>
+
+        </HorizontalStackLayout>
+        
+        <HorizontalStackLayout>
+            <Label  Text="Манга"/>
+            <Label Text="{Binding MangaCount}"/>
+        </HorizontalStackLayout>
+      
+    </VerticalStackLayout>
+</ContentPage>

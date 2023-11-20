@@ -5,9 +5,7 @@
              x:Class="Archivum.TextLibraryPage"             
              Title="{Binding Name}"
              Shell.TabBarIsVisible="False">
-    <ContentPage.BindingContext>
-        <local:TextLibraryViewModel/>
-    </ContentPage.BindingContext>
+
     <ScrollView>
 
         <StackLayout x:Name="hg" Margin="5" >

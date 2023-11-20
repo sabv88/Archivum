@@ -5,9 +5,7 @@
              Title="TextLibraryListPage"
              xmlns:local="clr-namespace:Archivum">
     
-     <ContentPage.BindingContext>
-        <local:TextLibraryListViewModel/>
-    </ContentPage.BindingContext>
+
 
     <Shell.TitleView>
         <StackLayout Margin="0"  Orientation="Horizontal">
@@ -25,7 +23,7 @@
 
 
         <CollectionView
-                    ItemsSource="{Binding textMaterials}"
+                    ItemsSource="{Binding Collection}"
                     SelectionMode="Single"
                     SelectedItem="{Binding SelectedVM, Mode=TwoWay}"
                     RemainingItemsThreshold ="1" RemainingItemsThresholdReachedCommand="{Binding next}"

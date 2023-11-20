@@ -1,59 +1,21 @@
 ﻿
 using Archivum.Logic;
-using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using Archivum.Views;
-
+using Archivum.ViewModels;
+using Archivum.Models;
 namespace Archivum;
-internal class VideoLibraryListViewModel : ObservableObject, INotifyPropertyChanged
+
+public partial class VideoLibraryListViewModel : BaseViewModel, INotifyPropertyChanged, IListView
 {
-    readonly VideoLibraryRepository database = new VideoLibraryRepository();
-    public ObservableCollection<VideoLibraryViewModel> videoMaterials { get; set; } = new();
+    readonly IRepository repository;
+    public ObservableCollection<IViewModel> Collection { get; set; } = new();
     public event PropertyChangedEventHandler? PropertyChanged;
-
     int start = 0;
-   
-    public ICommand TapItem { get; }
-    public ICommand Statistick => new Command(async () =>
-    {
-        await Shell.Current.GoToAsync($"videoStatictickPage");
-    });
-    public ICommand GetItems { get; }
-    public ICommand AddItem => new Command(async () =>
-    {
-        await Shell.Current.GoToAsync($"videolibraryPage", true, new Dictionary<string, object>
-        {
-            ["videoMaterial"] = null
-        });
-    });
-    public ICommand Search => new Command<string>(async (string query) =>
-    {
-        videoMaterials.Clear();
-        var searchRes = await database.GetSearchResults(query);
-        MainThread.BeginInvokeOnMainThread(() =>
-        {
-            foreach (var item in searchRes)
-            {
-                videoMaterials.Add(new VideoLibraryViewModel(item));
-            }
-        });
-        OnPropertyChanged("videoMaterials");
-
-    });
-    public ICommand ClearSearch => new Command<string>(async (string query) =>
-    {
-
-        videoMaterials.Clear();
-        start = 0;
-        Filter = "Все";
-    });
-    public ICommand next { get; }
-
-    private string filter;
+    string filter;
+    IViewModel selectedVM;
 
     public string Filter
     {
@@ -61,7 +23,7 @@ internal class VideoLibraryListViewModel : ObservableObject, INotifyPropertyChan
         {
             start = 0;
             filter = value;
-            videoMaterials.Clear();
+            Collection.Clear();
             _ = GetNextItemsAsync(value);
         }
         get
@@ -70,42 +32,80 @@ internal class VideoLibraryListViewModel : ObservableObject, INotifyPropertyChan
         }
     }
 
-    VideoLibraryViewModel selectedVM;
-
-    public VideoLibraryViewModel SelectedVM
+    public IViewModel SelectedVM
     {
         get { return selectedVM; }
         set
         {
             if (selectedVM != value)
             {
-                VideoLibraryViewModel tempVM = value;
+                IViewModel tempVM = value;
                 selectedVM = null;
+                SelectedVM = null;
                 OnPropertyChanged("SelectedVM");
                 TapItemAsync(tempVM);
             }
         }
     }
-
-    public VideoLibraryListViewModel()
+    public ICommand TapItem { get; }
+    public ICommand Statistick => new Command(async () =>
     {
+        await Shell.Current.GoToAsync($"videoStatictickPage");
+    });
+    public ICommand GetItems { get; }
+    public ICommand AddItem => new Command(async () =>
+    {
+        await Shell.Current.GoToAsync($"addPage", true, new Dictionary<string, object>
+        {
+            ["AddViewModel"] = new AddViewModel(repository)
+        });
+    });
+    public ICommand Search => new Command<string>(async (string query) =>
+    {
+        //videoMaterials.Clear();
+        //string Request = "SELECT * FROM [VideoMaterial] Where Name LIKE '" + query + "'";
+        //var searchRes = await database.ExecuteRequest<VideoMaterial>(Request);
+        //MainThread.BeginInvokeOnMainThread(() =>
+        //{
+        //    foreach (var item in searchRes)
+        //    {
+        //        videoMaterials.Add(new VideoLibraryViewModel(item));
+        //    }
+        //});
+        //OnPropertyChanged("videoMaterials");
+    });
+    public ICommand ClearSearch => new Command<string>(async (string query) =>
+    {
+        Collection.Clear();
+        start = 0;
+        Filter = "Все";
+    });
+    public ICommand next { get; }
+
+
+
+
+
+    public VideoLibraryListViewModel(IRepository repository)
+    {
+        this.repository = repository;
         Filter = "Все";
         Subsribes();
         GetItems = new Command(GetItemsAsync);
-        TapItem = new AsyncRelayCommand<VideoLibraryViewModel>(TapItemAsync);
+        TapItem = new AsyncRelayCommand<IViewModel>(TapItemAsync);
         next = new AsyncRelayCommand<string>(GetNextItemsAsync);
 
     }
 
     public async void GetItemsAsync()
     {
-        var items = await database.GetItemsAsync();
+        var items = await repository.GetItemsAsync<Material>();
         MainThread.BeginInvokeOnMainThread(() =>
         {
-            videoMaterials.Clear();
+            Collection.Clear();
             foreach (var item in items)
             {
-                videoMaterials.Add(new VideoLibraryViewModel(item));
+                Collection.Add(new VideoLibraryViewModel(item, new Repository()));
             }
 
         });
@@ -116,78 +116,125 @@ internal class VideoLibraryListViewModel : ObservableObject, INotifyPropertyChan
     {
         if (Filter == "Все")
         {
-
-            var a = await database.GetItemsToListAsync(start);
-            start += 5;
+            string query = "SELECT * FROM [Anime] LIMIT " + start + ", " + 2;
+            var animeList = await repository.ExecuteRequest<Anime>(query);
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                foreach (var item in a)
+                foreach (var item in animeList)
                 {
-                    videoMaterials.Add(new VideoLibraryViewModel(item));
+                    AnimeViewModel material = new(item.ID, item.Name, item.Cover, new Repository(), item.Comment, item.SeriesCount, item.Serieslength, item.Waifu);
+                    Collection.Add(material);
                 }
 
             });
+
+            query = "SELECT * FROM [Film] LIMIT " + start + ", " + 2;
+            var filmList = await repository.ExecuteRequest<Film>(query);
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                foreach (var item in filmList)
+                {
+                    FilmViewModel material = new(item.ID, item.Name, item.Cover, new Repository(), item.Filmlength, item.Comment);
+                    Collection.Add(material);
+                }
+
+            });
+
+            query = "SELECT * FROM [Serial] LIMIT " + start + ", " + 2;
+            var serialList = await repository.ExecuteRequest<Serial>(query);
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                foreach (var item in serialList)
+                {
+                    SerialViewModel material = new(item.ID, item.Name, item.Cover, new Repository(), item.Comment, item.SeriesCount, item.Serieslength);
+                    Collection.Add(material);
+                }
+
+            });
+
+            query = "SELECT * FROM [VideoMaterial] LIMIT " + start + ", " + 2;
+            var a1 = await repository.ExecuteRequest<Material>(query);
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                foreach (var item in a1)
+                {
+                    Collection.Add(new VideoLibraryViewModel(item, new Repository()));
+                }
+
+            });
+            start += 2;
+
         }
         else
         {
-            var a = await database.GetItemsToListAsync(start, Filter);
-            start += 5;
+            string query = "SELECT * FROM [VideoMaterial] Where Name LIKE '" + filter + "'";
+            var a = await repository.ExecuteRequest<Material>(query);
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 foreach (var item in a)
                 {
-                    videoMaterials.Add(new VideoLibraryViewModel(item));
+                    Collection.Add(new VideoLibraryViewModel(item, new Repository()));
                 }
 
             });
-            OnPropertyChanged("videoMaterials");
+            start += 2;
+
         }
+            OnPropertyChanged("videoMaterials");
 
     }
 
-    public async Task TapItemAsync(VideoLibraryViewModel videoMaterial)
+    public Task TapItemAsync(IViewModel videoMaterial)
     {
-        await Shell.Current.GoToAsync($"videolibraryPage", true, new Dictionary<string, object>
+        if (videoMaterial.GetType() == typeof(AnimeViewModel))
         {
-            ["videoMaterial"] = videoMaterial.videoMaterial
+            return Shell.Current.GoToAsync($"animePage", true, new Dictionary<string, object>
+            {
+                ["animeViewModel"] = videoMaterial
+            });
+        }
+        if (videoMaterial.GetType() == typeof(SerialViewModel))
+        {
+            return Shell.Current.GoToAsync($"serialPage", true, new Dictionary<string, object>
+            {
+                ["serialViewModel"] = videoMaterial
+            });
+        }
+        if (videoMaterial.GetType() == typeof(FilmViewModel))
+        {
+            return Shell.Current.GoToAsync($"filmPage", true, new Dictionary<string, object>
+            {
+                ["filmViewModel"] = videoMaterial
+            });
+        }
+        return Shell.Current.GoToAsync($"videolibraryPage", true, new Dictionary<string, object>
+            {
+                ["ViewModel"] = videoMaterial
         });
+        
+       
     }
 
-    public void OnPropertyChanged([CallerMemberName] string prop = "")
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-    }
+   
 
     public void Subsribes()
     {
-        MessagingCenter.Subscribe<VideoLibraryViewModel>(this, "Remove video element", (sender) =>
+        MessagingCenter.Subscribe<IViewModel>(this, "Remove video element", (sender) =>
         {
-            if (sender != null)
-            {
-                VideoLibraryViewModel matchedNote = videoMaterials.Where((n) => n.videoMaterial.ID == sender.videoMaterial.ID).FirstOrDefault();
-                videoMaterials.Remove(matchedNote);
+            IViewModel matchedNote = Collection.Where((n) => n.ID == sender.ID && n.GetType() == sender.GetType()).FirstOrDefault();
+                Collection.Remove(matchedNote);
                 OnPropertyChanged("videoMaterials");
-            }
         });
-        MessagingCenter.Subscribe<VideoLibraryViewModel>(this, "Change video element", (sender) =>
+        MessagingCenter.Subscribe<IViewModel>(this, "Change video element", (sender) =>
         {
-            VideoLibraryViewModel matchedNotevideoMaterials = videoMaterials.Where((n) => n.videoMaterial.ID == sender.videoMaterial.ID).FirstOrDefault();
-            if (matchedNotevideoMaterials != null)
+            IViewModel matchedNote = Collection.Where((n) => n.ID == sender.ID && n.GetType() == sender.GetType()).FirstOrDefault();
+            Collection.Remove(matchedNote);
+            OnPropertyChanged("videoMaterials");
+            if (matchedNote != null)
             {
-                matchedNotevideoMaterials.RefreshProperties();
+                matchedNote.RefreshProperties();
             }
-
         });
-    }
-
-    bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
-    {
-        if (Object.Equals(storage, value))
-            return false;
-
-        storage = value;
-        OnPropertyChanged(propertyName);
-        return true;
     }
 }
 

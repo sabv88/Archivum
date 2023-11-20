@@ -1,4 +1,6 @@
 ﻿using Archivum.Logic;
+using Archivum.Models;
+using Archivum.ViewModels;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -7,15 +9,14 @@ using System.Windows.Input;
 
 namespace Archivum;
 
-internal class TextLibraryListViewModel : INotifyPropertyChanged
+public class TextLibraryListViewModel : INotifyPropertyChanged
 {
-    readonly TextLibraryRepository database = new TextLibraryRepository();
-    public event PropertyChangedEventHandler PropertyChanged;
-    public ObservableCollection<TextLibraryViewModel> textMaterials { get; set; } = new();
-
+    readonly IRepository repository;
+    public ObservableCollection<IViewModel> Collection { get; set; } = new();
+    public event PropertyChangedEventHandler? PropertyChanged;
     int start = 0;
-  
-    private string filter;
+    string filter;
+    IViewModel selectedVM;
 
     public string Filter
     {
@@ -23,7 +24,7 @@ internal class TextLibraryListViewModel : INotifyPropertyChanged
         {
             start = 0;
             filter = value;
-            textMaterials.Clear();
+            Collection.Clear();
             _ = GetNextItemsAsync(value);
         }
         get
@@ -31,7 +32,21 @@ internal class TextLibraryListViewModel : INotifyPropertyChanged
             return filter;
         }
     }
-
+    public IViewModel SelectedVM
+    {
+        get { return selectedVM; }
+        set
+        {
+            if (selectedVM != value)
+            {
+                IViewModel tempVM = value;
+                selectedVM = null;
+                SelectedVM = null;
+                OnPropertyChanged("SelectedVM");
+                TapItemAsync(tempVM);
+            }
+        }
+    }
 
     public ICommand TapItem { get; }
     public ICommand Statistick => new Command(async () =>
@@ -39,55 +54,49 @@ internal class TextLibraryListViewModel : INotifyPropertyChanged
         await Shell.Current.GoToAsync($"textStatictickPage");
     });
     public ICommand GetItems { get; }
-    public ICommand AddItem { get; }
+    public ICommand AddItem => new Command(async () =>
+    {
+        await Shell.Current.GoToAsync($"addPageText", true, new Dictionary<string, object>
+        {
+            ["AddViewModelText"] = new AddViewModelText(repository)
+        });
+    });
     public ICommand Search => new Command<string>(async (string query) =>
     {
-        textMaterials.Clear();
-        var searchRes = await database.GetSearchResults(query);
-        MainThread.BeginInvokeOnMainThread(() =>
-        {
-            foreach (var item in searchRes)
-            {
-                textMaterials.Add(new TextLibraryViewModel(item));
-            }
-        });
+        //textMaterials.Clear();
+        //string Request = "SELECT * FROM [TextMaterial] Where Name LIKE '" + query + "'";
+        //var searchRes = await database.ExecuteRequest<Material>(Request);
+        //MainThread.BeginInvokeOnMainThread(() =>
+        //{
+        //    foreach (var item in searchRes)
+        //    {
+        //        textMaterials.Add(new TextLibraryViewModel(item));
+        //    }
+        //});
 
-        OnPropertyChanged("textMaterials");
+        //OnPropertyChanged("textMaterials");
 
     });
     public ICommand ClearSearch => new Command<string>(async (string query) =>
     {
 
-        textMaterials.Clear();
+        Collection.Clear();
         start = 0;
         Filter = "Все";
     });
     public ICommand next { get; }
 
-    TextLibraryViewModel selectedVM;
-    public TextLibraryViewModel SelectedVM
-    {
-        get { return selectedVM; }
-        set
-        {
-            if (selectedVM != value)
-            {
-                TextLibraryViewModel tempVM = value;
-                selectedVM = null;
-                OnPropertyChanged("SelectedVM");
-                TapItemAsync(tempVM);
-            }
-        }
-    }
 
-    public TextLibraryListViewModel()
+
+    public TextLibraryListViewModel(IRepository repository)
     {
-        Subsribes();
+        this.repository = repository;
         Filter = "Все";
+        Subsribes();
         GetItems = new Command(GetItemsAsync);
-        AddItem = new Command(AddItemAsync);
-        TapItem = new AsyncRelayCommand<TextLibraryViewModel>(TapItemAsync);
+        TapItem = new AsyncRelayCommand<IViewModel>(TapItemAsync);
         next = new AsyncRelayCommand<string>(GetNextItemsAsync);
+
     }
 
     protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -99,13 +108,13 @@ internal class TextLibraryListViewModel : INotifyPropertyChanged
 
     public async void GetItemsAsync()
     {
-        var items = await database.GetItemsAsync();
+        var items = await repository.GetItemsAsync<Material>();
         MainThread.BeginInvokeOnMainThread(() =>
         {
-            textMaterials.Clear();
+            Collection.Clear();
             foreach (var item in items)
             {
-                textMaterials.Add(new TextLibraryViewModel(item));
+                Collection.Add(new TextLibraryViewModel(item, new Repository()));
             }
 
         });
@@ -113,60 +122,92 @@ internal class TextLibraryListViewModel : INotifyPropertyChanged
         OnPropertyChanged("textMaterials");
     }
 
-    public async void GetNextItemsAsync()
-    {
-        var a = await database.GetItemsToListAsync(start);
-        start += 5;
-        MainThread.BeginInvokeOnMainThread(() =>
-        {
-            foreach (var item in a)
-            {
-                textMaterials.Add(new TextLibraryViewModel(item));
-            }
 
-        });
-        OnPropertyChanged("textMaterials");
-    }
     public async Task GetNextItemsAsync(string filter)
     {
         if (Filter == "Все")
         {
-
-            var a = await database.GetItemsToListAsync(start);
-            start += 5;
+            string query = "SELECT * FROM [Book] LIMIT " + start + ", " + 2;
+            var bookList = await repository.ExecuteRequest<Book>(query);
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                foreach (var item in a)
+                foreach (var item in bookList)
                 {
-                    textMaterials.Add(new TextLibraryViewModel(item));
+                    BookViewModel material = new(item.ID, item.Name, item.Cover, new Repository(), item.Comment, item.PagesAmount);
+                    Collection.Add(material);
                 }
 
             });
+
+            query = "SELECT * FROM [Manga] LIMIT " + start + ", " + 2;
+            var mangaList = await repository.ExecuteRequest<Manga>(query);
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                foreach (var item in mangaList)
+                {
+                    MangaViewModel material = new(item.ID, item.Name, item.Cover, new Repository(), item.Comment, item.PagesAmount);
+                    Collection.Add(material);
+                }
+
+            });
+
+            query = "SELECT * FROM [TextMaterial] LIMIT " + start + ", " + 2;
+            var a1 = await repository.ExecuteRequest<Material>(query);
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                foreach (var item in a1)
+                {
+                    Collection.Add(new VideoLibraryViewModel(item, new Repository()));
+                }
+
+            });
+            start += 2;
+
         }
         else
         {
-            var a = await database.GetItemsToListAsync(start, Filter);
-            start += 5;
+            string query = "SELECT * FROM [TextMaterial] Where Name LIKE '" + filter + "'";
+            var a = await repository.ExecuteRequest<Material>(query);
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 foreach (var item in a)
                 {
-                    textMaterials.Add(new TextLibraryViewModel(item));
+                    Collection.Add(new VideoLibraryViewModel(item, new Repository()));
                 }
 
             });
-            OnPropertyChanged("videoMaterials");
+            start += 2;
+
+        }
+        OnPropertyChanged("videoMaterials");
+    }
+
+
+
+    public Task TapItemAsync(IViewModel textMaterial)
+    {
+        if (textMaterial.GetType() == typeof(BookViewModel))
+        {
+            return Shell.Current.GoToAsync($"bookPage", true, new Dictionary<string, object>
+            {
+                ["bookViewModel"] = textMaterial
+            });
         }
 
-    }
-
-    public async Task TapItemAsync(TextLibraryViewModel textMaterial)
-    {
-        await Shell.Current.GoToAsync($"textlibraryPage", true, new Dictionary<string, object>
+        if (textMaterial.GetType() == typeof(MangaViewModel))
         {
-            ["textMaterial"] = textMaterial.textMaterial
+            return Shell.Current.GoToAsync($"mangaPage", true, new Dictionary<string, object>
+            {
+                ["mangaViewModel"] = textMaterial
+            });
+        }
+
+        return Shell.Current.GoToAsync($"textlibraryPage", true, new Dictionary<string, object>
+        {
+            ["ViewModel"] = textMaterial
         });
     }
+
     public async void AddItemAsync()
     {
         await Shell.Current.GoToAsync($"textLibraryPage", true, new Dictionary<string, object>
@@ -176,33 +217,21 @@ internal class TextLibraryListViewModel : INotifyPropertyChanged
     }
     public void Subsribes()
     {
-        MessagingCenter.Subscribe<TextLibraryViewModel>(this, "Remove text element", (sender) =>
+        MessagingCenter.Subscribe<IViewModel>(this, "Remove text element", (sender) =>
         {
-            if (sender != null)
-            {
-                TextLibraryViewModel matchedNote = textMaterials.Where((n) => n.textMaterial.ID == sender.textMaterial.ID).FirstOrDefault();
-                textMaterials.Remove(matchedNote);
-                OnPropertyChanged("textMaterials");
-            }
+            IViewModel matchedNote = Collection.Where((n) => n.ID == sender.ID && n.GetType() == sender.GetType()).FirstOrDefault();
+            Collection.Remove(matchedNote);
+            OnPropertyChanged("textMaterials");
         });
-        MessagingCenter.Subscribe<TextLibraryViewModel>(this, "Change text element", (sender) =>
+        MessagingCenter.Subscribe<IViewModel>(this, "Change text element", (sender) =>
         {
-            TextLibraryViewModel matchedNotevideoMaterials = textMaterials.Where((n) => n.textMaterial.ID == sender.textMaterial.ID).FirstOrDefault();
-            if (matchedNotevideoMaterials != null)
+            IViewModel matchedNote = Collection.Where((n) => n.ID == sender.ID && n.GetType() == sender.GetType()).FirstOrDefault();
+            Collection.Remove(matchedNote);
+            OnPropertyChanged("textMaterials");
+            if (matchedNote != null)
             {
-                matchedNotevideoMaterials.RefreshProperties();
+                matchedNote.RefreshProperties();
             }
         });
     }
-
-    bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
-    {
-        if (Object.Equals(storage, value))
-            return false;
-
-        storage = value;
-        OnPropertyChanged(propertyName);
-        return true;
-    }
-
 }

@@ -4,29 +4,118 @@
              xmlns:local="clr-namespace:Archivum.ViewModels"
              x:Class="Archivum.Views.VideoStatistick"
              Shell.TabBarIsVisible="False">
-    <ContentPage.BindingContext>
-        <local:VideoStatictickViewModel/>
-    </ContentPage.BindingContext>
-    <VerticalStackLayout>
-        <HorizontalStackLayout Margin="20" Spacing="10">
-            <Label  Text="Всего" FontSize="Large"/>
-            <Label  Text="{Binding AllCount}" FontSize="Large"/>
-
-        </HorizontalStackLayout>
+  <ScrollView>
+        <VerticalStackLayout>
             <HorizontalStackLayout Margin="20" Spacing="10">
-            <Label  Text="Аниме" FontSize="Large" />
-            <Label  Text="{Binding AnimeCount}" FontSize="Large" />
-
+            <Label  Text="Просмотренно аниме" FontSize="Small" />
+            <Label  Text="{Binding AnimeCount}" FontSize="Small" />
         </HorizontalStackLayout>
+
         <HorizontalStackLayout Margin="20" Spacing="10">
-            <Label  Text="Сериалов" FontSize="Large"/>
-            <Label Text="{Binding SeriesCount}" FontSize="Large"/>
-
+            <Label  Text="Просмотренно серий аниме" FontSize="Small" />
+            <Label  Text="{Binding AnimeSeriesCount}" FontSize="Small" />
         </HorizontalStackLayout>
+
         <HorizontalStackLayout Margin="20" Spacing="10">
-            <Label  Text="Фильмов" FontSize="Large"/>
-            <Label  Text="{Binding FilmsCount}" FontSize="Large"/>
-
+            <Label  Text="Просмотренно минут аниме" FontSize="Small" />
+            <Label  Text="{Binding AnimeSeriesLengthSum}" FontSize="Small" />
         </HorizontalStackLayout>
-    </VerticalStackLayout>
+
+        <HorizontalStackLayout Margin="20" Spacing="10">
+            <Label  Text="Максимальное колличество серий в тайтле" FontSize="Small" />
+            <Label  Text="{Binding AnimeMaxSeriesCount}" FontSize="Small" />
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout Margin="20" Spacing="10">
+            <Label  Text="Минимальное колличество серий в тайтле" FontSize="Small" />
+            <Label  Text="{Binding AnimeMinSeriesCount}" FontSize="Small" />
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout Margin="20" Spacing="10">
+            <Label  Text="Максимальная длинна серии в тайтле" FontSize="Small" />
+            <Label  Text="{Binding AnimeMaxSeriesLength}" FontSize="Small" />
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout Margin="20" Spacing="10">
+            <Label  Text="Минимальная длинна серий в тайтле" FontSize="Small" />
+            <Label  Text="{Binding AnimeMinSeriesLength}" FontSize="Small" />
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout Margin="20" Spacing="10">
+            <Label  Text="Количество вайф" FontSize="Small" />
+            <Label  Text="{Binding AnimeWaifuCount}" FontSize="Small" />
+        </HorizontalStackLayout>
+
+    
+        
+        <HorizontalStackLayout Margin="20" Spacing="10">
+            <Label  Text="Просмотренно Фильмов" FontSize="Small"/>
+            <Label  Text="{Binding FilmsCount}" FontSize="Small"/>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout Margin="20" Spacing="10">
+            <Label  Text="Просмотренно минут в фильмах" FontSize="Small"/>
+            <Label  Text="{Binding FilmlengthSum}" FontSize="Small"/>
+        </HorizontalStackLayout>
+        
+        <HorizontalStackLayout Margin="20" Spacing="10">
+            <Label  Text="Максимальная длинна фильма" FontSize="Small"/>
+            <Label  Text="{Binding FilmlengthMax}" FontSize="Small"/>
+        </HorizontalStackLayout>
+        
+        <HorizontalStackLayout Margin="20" Spacing="10">
+            <Label  Text="Минимальная длинна фильма" FontSize="Small"/>
+            <Label  Text="{Binding FilmlengthMin}" FontSize="Small"/>
+        </HorizontalStackLayout>
+
+        
+        
+        <HorizontalStackLayout Margin="20" Spacing="10">
+            <Label  Text="Просмотренно Сериалов" FontSize="Small"/>
+            <Label Text="{Binding SeriesCount}" FontSize="Small"/>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout Margin="20" Spacing="10">
+            <Label  Text="Всего просмотренно серий сериалов" FontSize="Small"/>
+            <Label Text="{Binding SeriesSeriesCount}" FontSize="Small"/>
+        </HorizontalStackLayout>  
+        
+        <HorizontalStackLayout Margin="20" Spacing="10">
+            <Label  Text="Просмотренно минут сериалов" FontSize="Small" />
+            <Label  Text="{Binding SerieslengthSum}" FontSize="Small" />
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout Margin="20" Spacing="10">
+            <Label  Text="Максимальное колличество серий в тайтле" FontSize="Small" />
+            <Label  Text="{Binding SeriesMaxSeriesCount}" FontSize="Small" />
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout Margin="20" Spacing="10">
+            <Label  Text="Минимальное колличество серий в тайтле" FontSize="Small" />
+            <Label  Text="{Binding SeriesMinSeriesCount}" FontSize="Small" />
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout Margin="20" Spacing="10">
+            <Label  Text="Максимальная длинна серии" FontSize="Small"/>
+            <Label Text="{Binding SerieslengthMax}" FontSize="Small"/>
+        </HorizontalStackLayout>
+        
+        <HorizontalStackLayout Margin="20" Spacing="10">
+            <Label  Text="Минимальная длинна серии" FontSize="Small"/>
+            <Label Text="{Binding SerieslengthMin}" FontSize="Small"/>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout Margin="20" Spacing="10">
+            <Label  Text="Всего просмотренно аниме, фильмов и сериалов" FontSize="Small"/>
+                <Label  Text="{Binding AllCount}" FontSize="Small"/>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout Margin="20" Spacing="10">
+             <Label  Text="Всего просмотренно аниме, фильмов и сериалов" FontSize="Small"/>
+                <Label  Text="{Binding AllTime}" FontSize="Small"/>
+        </HorizontalStackLayout>
+            
+        </VerticalStackLayout>
+  </ScrollView>
+
 </ContentPage>

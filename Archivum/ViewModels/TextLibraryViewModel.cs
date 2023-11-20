@@ -1,154 +1,104 @@
 ﻿using Archivum.Logic;
 using System.ComponentModel;
 using System.Windows.Input;
-using System.Runtime.CompilerServices;
-using System;
+using Archivum.Models;
+using Archivum.ViewModels;
 
 namespace Archivum;
 
-public class TextLibraryViewModel : IQueryAttributable, INotifyPropertyChanged
+public class TextLibraryViewModel : BaseViewModel, IViewModel
 {
-    readonly TextLibraryRepository database = new TextLibraryRepository();
+    internal IRepository repository;
+    public int ID { get; set; }
+    private string name;
+    public byte[] cover { get; set; } = new byte[0];
 
-    public event PropertyChangedEventHandler PropertyChanged;
-    public TextMaterial textMaterial  = new TextMaterial();
-
-    public ICommand SaveItem { get; private set; }
-    public ICommand DeleteItem { get; private set; }
-    public ICommand AddImage { get; private set; }
-    public TextLibraryViewModel()
-    {
-        SaveItem = new Command(
-        execute: () =>
-        {
-            _ = database.SaveItemAsync(textMaterial);
-            MessagingCenter.Send<TextLibraryViewModel>(this, "Change text element");
-        });
-        DeleteItem = new Command(
-       execute: async () =>
-        {
-            _ = database.DeleteItemAsync(textMaterial);
-            MessagingCenter.Send<TextLibraryViewModel>(this, "Remove text element");
-            await Shell.Current.GoToAsync($"..");
-        });
-        AddImage = new Command(
-        execute: () =>
-        {
-            TakePhoto();
-        });
-
-
-    }
-
-    public TextLibraryViewModel(TextMaterial tm)
-    {
-        textMaterial = tm;
-        SaveItem = new Command(
-        execute: () =>
-        {
-            _ = database.SaveItemAsync(textMaterial);
-            MessagingCenter.Send<TextLibraryViewModel>(this, "Change text element");
-        });
-        DeleteItem = new Command(
-       execute: async () =>
-       {
-           _ = database.DeleteItemAsync(textMaterial);
-           //TextListElement textListElement = new TextListElement(textMaterial.ID, textMaterial.Name);
-           MessagingCenter.Send<TextLibraryViewModel>(this, "Remove text element");
-           await Shell.Current.GoToAsync($"..");
-       });
-        AddImage = new Command(
-        execute: () =>
-        {
-            TakePhoto();
-        });
-
-
-    }
     public string Name
     {
-        get => textMaterial.Name;
+        get => name;
         set
         {
-            if (textMaterial.Name != value)
+            if (name != value)
             {
-                textMaterial.Name = value;
-                OnPropertyChanged();
+                name = value;
+                OnPropertyChanged(nameof(Name));
             }
         }
     }
 
-    public string Type
-    {
-        get => textMaterial.Type;
-        set
-        {
-            if (textMaterial.Type != value)
-            {
-                textMaterial.Type = value;
-                OnPropertyChanged();
-            }
-        }
-    }
-
-    public string Comment
-    {
-        get => textMaterial.Comment;
-        set
-        {
-            if (textMaterial.Comment != value)
-            {
-                textMaterial.Comment = value;
-                OnPropertyChanged();
-            }
-        }
-    }
 
     public ImageSource Cover
     {
         get
         {
-            if (textMaterial.Cover.Length == 0)
+            if (cover.Length == 0)
             {
-                return ImageSource.FromFile("dotnet_bot.svg");
+                return ImageSource.FromFile("picture1.svg");
             }
 
-            MemoryStream ms = new MemoryStream(textMaterial.Cover);
+            MemoryStream ms = new MemoryStream(cover);
             return ImageSource.FromStream(() => ms);
         }
     }
 
-
-    public async void ApplyQueryAttributes(IDictionary<string, object> query)
-    {
-        if (query["textMaterial"] != null)
+    public ICommand SaveItem => new Command<object>(
+        execute: (object obj) =>
         {
-            textMaterial = query["textMaterial"] as TextMaterial;
+            var a = obj as TextLibraryViewModel;
+            repository.SaveItemAsync(new Material(ID, name, cover), ID);
+            MessagingCenter.Send<TextLibraryViewModel>(this, "Change video element");
             RefreshProperties();
-        }
-    }
+        });
 
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    public ICommand DeleteItem => new Command(
+        execute: async () =>
+        {
+            _ = repository.DeleteItemAsync(new Material(ID, name, cover));
+            MessagingCenter.Send<TextLibraryViewModel>(this, "Remove video element");
+            await Shell.Current.GoToAsync($"..");
+        });
+
+    public ICommand AddImage => new Command(
+        execute: () =>
+        {
+            TakePhoto();
+        });
+
+    public TextLibraryViewModel(IRepository repository)
     {
-        PropertyChangedEventHandler handler = PropertyChanged;
-        if (handler != null)
-            handler(this, new PropertyChangedEventArgs(propertyName));
+        this.repository = repository;
     }
 
-    public async void TakePhoto()
+    public TextLibraryViewModel(Material vd, IRepository repository)
+    {
+        ID = vd.ID;
+        Name = vd.Name;
+        cover = vd.Cover;
+        this.repository = repository;
+    }
+
+    public TextLibraryViewModel(int ID, string Name, byte[] cover, IRepository repository)
+    {
+        this.repository = repository;
+        this.ID = ID;
+        this.Name = Name;
+        this.cover = cover;
+    }
+
+
+    public async virtual void TakePhoto()
     {
         Stream stream = await new PhotoPickerService().GetImageStreamAsync();
         if (stream != null)
         {
             MemoryStream memory = new MemoryStream();
             await stream.CopyToAsync(memory);
-            textMaterial.Cover = memory.ToArray();
+            cover = memory.ToArray();
             RefreshProperties();
         }
     }
 
-
-    public void RefreshProperties()
+    public virtual void RefreshProperties()
     {
         OnPropertyChanged("Name");
         OnPropertyChanged("Comment");

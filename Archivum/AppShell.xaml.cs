@@ -21,6 +21,13 @@ public partial class AppShell : Shell
         Routes.Add("textlibraryPage", typeof(TextLibraryPage));
         Routes.Add("videoStatictickPage", typeof(VideoStatistick));
         Routes.Add("textStatictickPage", typeof(TextStatistick));
+        Routes.Add("serialPage", typeof(SerialPage));
+        Routes.Add("animePage", typeof(AnimePage));
+        Routes.Add("filmPage", typeof(FilmPage));
+        Routes.Add("addPage", typeof(AddPage));
+        Routes.Add("bookPage", typeof(BookPage));
+        Routes.Add("mangaPage", typeof(MangaPage));
+        Routes.Add("addPageText", typeof(AddPageText));
 
         foreach (var item in Routes)
         {

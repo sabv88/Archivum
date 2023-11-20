@@ -4,9 +4,10 @@ namespace Archivum.Views;
 
 public partial class TextLibraryListPage : ContentPage
 {
-	public TextLibraryListPage()
+	public TextLibraryListPage(TextLibraryListViewModel viewModel)
 	{
-		InitializeComponent();
+        this.BindingContext = viewModel;
+        InitializeComponent();
 	}
 
     async void HandleSimplePopupButtonClicked(object sender, EventArgs e)

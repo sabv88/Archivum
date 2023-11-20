@@ -2,8 +2,9 @@ namespace Archivum
 {
 	public partial class TextLibraryPage : ContentPage
 	{
-		public TextLibraryPage()
+		public TextLibraryPage(TextLibraryViewModel viewModel)
 		{
+			this.BindingContext = viewModel;
 			InitializeComponent();
 		}
 	}

@@ -4,12 +4,7 @@
              x:Class="Archivum.Views.VideoLibraryListPage"
              xmlns:local="clr-namespace:Archivum"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
-             
-    <ContentPage.BindingContext>
-        <local:VideoLibraryListViewModel/>
-    </ContentPage.BindingContext>
-    
-  
+            
     
     <Shell.TitleView >
         <StackLayout Margin="0"  Orientation="Horizontal" >
@@ -27,7 +22,7 @@
     <StackLayout>
 
             <CollectionView
-                    ItemsSource="{Binding videoMaterials}"
+                    ItemsSource="{Binding Collection}"
                     SelectionMode="Single"
                     SelectedItem="{Binding SelectedVM, Mode=TwoWay}"
                     RemainingItemsThreshold ="1" RemainingItemsThresholdReachedCommand="{Binding next}"
@@ -38,7 +33,7 @@
             <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <StackLayout>
-                            <Image Source="{Binding Cover}" Aspect = "AspectFill"/>
+                        <Image Source="{Binding Cover}" Aspect = "AspectFit"/>
                             <Label Text="{Binding Name}" FontSize="Large" HorizontalOptions="Center" />
                         </StackLayout>
                     </DataTemplate>

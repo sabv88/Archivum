@@ -1,6 +1,6 @@
 ﻿using Android.Content;
 
-namespace Archivum
+namespace Archivum.Logic
 {
     public partial class PhotoPickerService
     {

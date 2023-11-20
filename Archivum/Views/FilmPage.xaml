@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:Archivum"
-             x:Class="Archivum.VideoLibraryPage"             
+             x:Class="Archivum.Views.FilmPage"
+             xmlns:local="clr-namespace:Archivum.ViewModels"
              Title="{Binding Name}"
              Shell.TabBarIsVisible="False">
     <ScrollView>
@@ -15,6 +15,19 @@
             </Image >
             <Label Text="Название" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
             <Entry Text="{Binding Name, Mode=TwoWay}" />
+
+            <Label Text="Фильм" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
+            <Picker SelectedItem="{Binding Type, Mode=TwoWay}" >
+                <Picker.Items>
+                    <x:String>Аниме</x:String>
+                    <x:String>Фильм</x:String>
+                    <x:String>Сериал</x:String>
+                </Picker.Items>
+            </Picker>
+           
+            <Label Text="Длительность" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
+            <Entry Text="{Binding Filmlength, Mode=TwoWay}" />
+
             <Label Text="Комментарий" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
             <Entry Text="{Binding Comment, Mode=TwoWay}" />
 
@@ -22,8 +35,8 @@
                 <Button Text="Добавить" x:Name="add" Command="{Binding SaveItem}" CommandParameter="{Binding }" CornerRadius="25" HorizontalOptions="StartAndExpand" />
                 <Button Text="Удалить" Command="{Binding DeleteItem}" CommandParameter="{Binding}" CornerRadius="25" HorizontalOptions="EndAndExpand"/>
             </HorizontalStackLayout>
-           
+
         </StackLayout>
 
-        </ScrollView>
+    </ScrollView>
 </ContentPage>

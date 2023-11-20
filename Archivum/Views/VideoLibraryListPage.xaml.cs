@@ -5,8 +5,9 @@ namespace Archivum.Views;
 
 public partial class VideoLibraryListPage : ContentPage
 {
-    public VideoLibraryListPage()
+    public VideoLibraryListPage(VideoLibraryListViewModel viewModel)
 	{ 
+        this.BindingContext = viewModel;
         InitializeComponent();          
     }
 
@@ -17,4 +18,4 @@ public partial class VideoLibraryListPage : ContentPage
         var simplePopup = new VideoPopup();
         await this.ShowPopupAsync(simplePopup);
     }
-}   
+}  

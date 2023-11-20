@@ -11,7 +11,7 @@ namespace Archivum.ViewModels
 {
     internal class TextStatistickViewModel: INotifyPropertyChanged
     {
-        readonly TextLibraryRepository database = new TextLibraryRepository();
+        readonly Repository database = new Repository();
         public int AllCount { get; set; }
         public int BooksCount { get; set; }
         public int MangaCount { get; set; }
@@ -25,9 +25,8 @@ namespace Archivum.ViewModels
 
         public async void GetItemsAsync()
         {
-            BooksCount = await database.GetCount("Книга");
-            MangaCount = await database.GetCount("Манга");
-            AllCount = BooksCount + MangaCount;
+            
+          
             OnPropertyChanged("BooksCount");
             OnPropertyChanged("MangaCount");
             OnPropertyChanged("AllCount");

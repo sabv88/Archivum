@@ -1,136 +1,101 @@
 ﻿using Archivum.Logic;
 using System.Windows.Input;
-using CommunityToolkit.Mvvm.ComponentModel;
+using Archivum.Models;
+using Archivum.ViewModels;
 
 namespace Archivum;
 
-public class VideoLibraryViewModel : ObservableObject, IQueryAttributable
+public partial class VideoLibraryViewModel : BaseViewModel, IViewModel
 {
-    readonly VideoLibraryRepository database = new VideoLibraryRepository();
-    public VideoMaterial videoMaterial = new VideoMaterial();
+    internal IRepository repository;
+    public int ID { get; set; }
+    string name;
+    public byte[] cover { get; set; } = new byte[0];
 
-    public ICommand SaveItem { get; private set; }
-    public ICommand DeleteItem { get; private set; }
-    public ICommand AddImage { get; private set; }
-
-    public VideoLibraryViewModel(VideoMaterial vd)
-    {
-        videoMaterial = vd;
-        SaveItem = new Command(
-        execute: () =>
-        {
-            _ = database.SaveItemAsync(videoMaterial);
-            MessagingCenter.Send<VideoLibraryViewModel>(this, "Change video element");
-        });
-        DeleteItem = new Command(
-        execute: async () =>
-        {
-            _ = database.DeleteItemAsync(videoMaterial);
-            MessagingCenter.Send<VideoLibraryViewModel>(this, "Remove video element");
-            await Shell.Current.GoToAsync($"..");
-        });
-        AddImage = new Command(
-        execute: () =>
-        {
-            TakePhoto();
-        });
-    }
-    public VideoLibraryViewModel()
-    {
-        SaveItem = new Command(
-        execute: () =>
-        {
-            _ = database.SaveItemAsync(videoMaterial);
-            MessagingCenter.Send<VideoLibraryViewModel>(this, "Change video element");
-        });
-        DeleteItem = new Command(
-        execute: async () =>
-        {
-            _ = database.DeleteItemAsync(videoMaterial);
-            MessagingCenter.Send<VideoLibraryViewModel>(this, "Remove video element");
-            await Shell.Current.GoToAsync($"..");
-        });
-        AddImage = new Command(
-        execute: () =>
-        {
-            TakePhoto();
-        });
-    }
     public string Name
     {
-        get => videoMaterial.Name;
+        get => name;
         set
         {
-            if (videoMaterial.Name != value)
+            if (name != value)
             {
-                videoMaterial.Name = value;
-                OnPropertyChanged();
+                name = value;
+                OnPropertyChanged(nameof(Name));
             }
         }
     }
 
-    public string Type
-    {
-        get => videoMaterial.Type;
-        set
-        {
-            if (videoMaterial.Type != value)
-            {
-                videoMaterial.Type = value;
-                OnPropertyChanged();
-            }
-        }
-    }
-
-    public string Comment
-    {
-        get => videoMaterial.Comment;
-        set
-        {
-            if (videoMaterial.Comment != value)
-            {
-                videoMaterial.Comment = value;
-                OnPropertyChanged();
-            }
-        }
-    }
 
     public ImageSource Cover
     {
         get
         {
-            if (videoMaterial.Cover.Length == 0)
+            if (cover.Length == 0)
             {
                 return ImageSource.FromFile("picture1.svg");
             }
 
-            MemoryStream ms = new MemoryStream(videoMaterial.Cover);
+            MemoryStream ms = new MemoryStream(cover);
             return ImageSource.FromStream(() => ms);
         }
     }
 
-    public async void ApplyQueryAttributes(IDictionary<string, object> query)
-    {
-        if (query["videoMaterial"] != null)
+    public ICommand SaveItem => new Command<object>(
+           execute: (object obj) =>
+           {
+               repository.SaveItemAsync(new Material(ID, name, cover), ID);
+               MessagingCenter.Send<VideoLibraryViewModel>(this, "Change video element");
+               RefreshProperties();
+           });
+
+    public ICommand DeleteItem => new Command(
+        execute: async () =>
         {
-            videoMaterial = query["videoMaterial"] as VideoMaterial;
-            RefreshProperties();
-        }
+            _ = repository.DeleteItemAsync(new Material(ID, name, cover));
+            MessagingCenter.Send<VideoLibraryViewModel>(this, "Remove video element");
+            await Shell.Current.GoToAsync($"..");
+        });
+
+    public ICommand AddImage => new Command(
+        execute: () =>
+        {
+            TakePhoto();
+        });
+
+    public VideoLibraryViewModel(IRepository repository)
+    {
+        this.repository = repository;
     }
 
-    public async void TakePhoto()
+    public VideoLibraryViewModel(Material vd, IRepository repository)
+    {
+        this.repository = repository;
+        ID = vd.ID;
+        Name = vd.Name;
+        cover = vd.Cover;
+    }
+
+    public VideoLibraryViewModel(int ID, string Name, byte[] cover, IRepository repository)
+    {
+        this.repository = repository;
+        this.ID = ID;
+        this.Name = Name;
+        this.cover = cover;
+    }
+
+    public async virtual void TakePhoto()
     {
         Stream stream = await new PhotoPickerService().GetImageStreamAsync();
         if (stream != null)
         {
             MemoryStream memory = new MemoryStream();
             await stream.CopyToAsync(memory);
-            videoMaterial.Cover = memory.ToArray();
+            cover = memory.ToArray();
             RefreshProperties();
         }
     }
 
-    public void RefreshProperties()
+    public virtual void RefreshProperties()
     {
         OnPropertyChanged("Name");
         OnPropertyChanged("Comment");

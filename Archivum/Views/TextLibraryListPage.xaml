@@ -4,23 +4,29 @@
              x:Class="Archivum.Views.TextLibraryListPage"
              Title="TextLibraryListPage"
              xmlns:local="clr-namespace:Archivum">
-    
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Добавить" Order="Secondary" Command="{Binding AddItem}"/>
+        <ToolbarItem Text="Статистика" Order="Secondary"  Command="{Binding Statistick}"/>
+    </ContentPage.ToolbarItems>
 
     <Shell.TitleView>
         <StackLayout Margin="0"  Orientation="Horizontal">
             <SearchBar x:Name="searchBar"
                    SearchCommand="{Binding Search}"
                    SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"
-                   WidthRequest="300"
                    HorizontalOptions="StartAndExpand"/>
-
-            <ImageButton Source="coderwall1.svg" Clicked="HandleSimplePopupButtonClicked" HeightRequest="50" WidthRequest="50" HorizontalOptions="EndAndExpand"></ImageButton>
         </StackLayout>
     </Shell.TitleView>
 
     <StackLayout >
-
+        <Picker SelectedItem="{Binding Filter}">
+            <Picker.Items>
+                <x:String>Все</x:String>
+                <x:String>Книга</x:String>
+                <x:String>Манга</x:String>
+            </Picker.Items>
+        </Picker>
 
         <CollectionView
                     ItemsSource="{Binding Collection}"

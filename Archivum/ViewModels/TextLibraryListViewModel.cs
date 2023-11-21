@@ -157,7 +157,7 @@ public class TextLibraryListViewModel : INotifyPropertyChanged
             {
                 foreach (var item in a1)
                 {
-                    Collection.Add(new VideoLibraryViewModel(item, new Repository()));
+                    Collection.Add(new TextLibraryViewModel(item, new Repository()));
                 }
 
             });

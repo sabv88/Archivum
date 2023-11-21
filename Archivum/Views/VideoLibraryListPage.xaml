@@ -4,24 +4,32 @@
              x:Class="Archivum.Views.VideoLibraryListPage"
              xmlns:local="clr-namespace:Archivum"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
-            
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Добавить" Order="Secondary" Command="{Binding AddItem}"/>
+        <ToolbarItem Text="Статистика" Order="Secondary"  Command="{Binding Statistick}"/>
+    </ContentPage.ToolbarItems>
     
     <Shell.TitleView >
         <StackLayout Margin="0"  Orientation="Horizontal" >
             <SearchBar x:Name="searchBar"
                    SearchCommand="{Binding Search}"
                    SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"
-                   WidthRequest="300"
                    HorizontalOptions="StartAndExpand"/>
-
-            <ImageButton x:Name="PopupButton"  Source="coderwall1.svg" Clicked="HandleSimplePopupButtonClicked" HeightRequest="50" WidthRequest="50" HorizontalOptions="EndAndExpand"></ImageButton>
         </StackLayout>
     </Shell.TitleView>
 
 
     <StackLayout>
-
-            <CollectionView
+        <Picker SelectedItem="{Binding Filter}">
+            <Picker.Items>
+                <x:String>Все</x:String>
+                <x:String>Аниме</x:String>
+                <x:String>Фильм</x:String>
+                <x:String>Сериал</x:String>
+            </Picker.Items>
+        </Picker>
+        <CollectionView
                     ItemsSource="{Binding Collection}"
                     SelectionMode="Single"
                     SelectedItem="{Binding SelectedVM, Mode=TwoWay}"
@@ -39,8 +47,6 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-
-
-        </StackLayout>
+    </StackLayout>
      
 </ContentPage>

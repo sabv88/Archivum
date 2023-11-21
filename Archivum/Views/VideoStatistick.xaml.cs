@@ -10,6 +10,4 @@ public partial class VideoStatistick : ContentPage
 		this.BindingContext = new VideoStatictickViewModel(repository);
 		InitializeComponent();
 	}
-
-
 }

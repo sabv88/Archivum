@@ -11,7 +11,6 @@ namespace Archivum.Logic
     {
         readonly IRepository repository;
 
-
         public VideoStatictickService(IRepository repository)
         {
             this.repository = repository;
@@ -73,7 +72,7 @@ namespace Archivum.Logic
         public async Task<int> GetFilmCountAsync()
         {
             string query = "select count(*) from [Film]";
-            return await repository.ExecuteScalar<Anime>(query); ;
+            return await repository.ExecuteScalar<Anime>(query);
         }
 
         public async Task<int> GetFilmLengthSum()

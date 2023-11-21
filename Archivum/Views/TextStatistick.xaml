@@ -4,25 +4,40 @@
              xmlns:local="clr-namespace:Archivum.ViewModels"
              x:Class="Archivum.Views.TextStatistick"
              Title="TextStatistick">
-    <ContentPage.BindingContext>
-        <local:TextStatistickViewModel/>
-    </ContentPage.BindingContext>
-    <VerticalStackLayout>
-        <HorizontalStackLayout>
-            <Label  Text="Всего"/>
-            <Label  Text="{Binding AllCount}"/>
+    <ScrollView >
+        <StackLayout>
+            
+                <Label Text="Книги" FontSize="Large" Grid.ColumnSpan="2" Grid.Row="0" HorizontalOptions="Center" LineBreakMode="WordWrap" />
+            <Label Text="Прочитано книг" FontSize="Small" Grid.Row="1" LineBreakMode="WordWrap" />
+        <Label Text="{Binding BooksCount}" FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalOptions="Center"/>
 
-        </HorizontalStackLayout>
-        <HorizontalStackLayout>
-            <Label  Text="книги"/>
-            <Label  Text="{Binding BooksCount}"/>
+        <Label Text="Прочитано страниц книг" FontSize="Small"  LineBreakMode="WordWrap" Grid.Row="2"/>
+        <Label Text="{Binding BooksPagesCount}" FontSize="Small" Grid.Column="1" Grid.Row="2" HorizontalOptions="Center"/>
+            <Frame BackgroundColor="Black">
+                <StackLayout>
+                    <Label  Text="Максимальное количество страниц в книге" FontSize="Small" LineBreakMode="WordWrap"/>
+                    <Label  Text="{Binding BooksMaxPagesAmount}" HorizontalOptions="Center" FontSize="Small"/>
 
-        </HorizontalStackLayout>
+                </StackLayout>
+            </Frame>
+
+
+                <Label  Text="Минимальное количество страниц в книге" FontSize="Small"  Grid.Row="4" LineBreakMode="WordWrap"/>
+        <Label  Text="{Binding BooksMinPagesAmount}"  Grid.Column="1" Grid.Row="4" FontSize="Small" HorizontalOptions="Center"/>
         
-        <HorizontalStackLayout>
-            <Label  Text="Манга"/>
-            <Label Text="{Binding MangaCount}"/>
-        </HorizontalStackLayout>
-      
-    </VerticalStackLayout>
+        <Label Text="Манга" FontSize="Large" Grid.ColumnSpan="2" Grid.Row="5" HorizontalOptions="Center" LineBreakMode="WordWrap" />
+
+        <Label  Text="Прочитано манги" FontSize="Small"  Grid.Row="6" LineBreakMode="WordWrap"/>
+        <Label  Text="{Binding MangaCount}" Grid.Column="1" Grid.Row="6" FontSize="Small" HorizontalOptions="Center"/>
+
+        <Label Text="Прочитано страниц книг" FontSize="Small"  LineBreakMode="WordWrap" Grid.Row="7"/>
+        <Label Text="{Binding BooksPagesCount}" FontSize="Small" Grid.Column="1" Grid.Row="7" HorizontalOptions="Center"/>
+
+        <Label  Text="Максимальное количество страниц в манге" FontSize="Small"  Grid.Row="8" LineBreakMode="WordWrap"/>
+        <Label  Text="{Binding MangaMaxPagesAmount}" Grid.Column="1" Grid.Row="8" FontSize="Small" HorizontalOptions="Center"/>
+
+        <Label  Text="Минимальное количество страниц в манге" FontSize="Small"  Grid.Row="9" LineBreakMode="WordWrap"/>
+        <Label  Text="{Binding MangaMinPagesAmount}" Grid.Column="1" Grid.Row="9" FontSize="Small" HorizontalOptions="Center"/>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>

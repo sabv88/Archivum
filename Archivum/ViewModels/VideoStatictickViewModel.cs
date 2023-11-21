@@ -8,8 +8,7 @@ namespace Archivum.ViewModels
 {
     internal class VideoStatictickViewModel : INotifyPropertyChanged
     {
-        VideoStatictickService videoStatictickService;
-        IRepository repository;
+        readonly VideoStatictickService videoStatictickService;
 
         public int AllCount { get; set; }
         public int AllTime { get; set; }
@@ -43,7 +42,6 @@ namespace Archivum.ViewModels
 
         public VideoStatictickViewModel(IRepository repository)
         {
-            this.repository = repository;
             videoStatictickService = new VideoStatictickService(repository);
             GetItemsAsync();
         }

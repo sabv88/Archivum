@@ -1,9 +1,13 @@
+using Archivum.Logic;
+using Archivum.ViewModels;
+
 namespace Archivum.Views;
 
 public partial class TextStatistick : ContentPage
 {
-	public TextStatistick()
+	public TextStatistick(IRepository repository)
 	{
-		InitializeComponent();
+        this.BindingContext = new TextStatistickViewModel(repository);
+        InitializeComponent();
 	}
 }

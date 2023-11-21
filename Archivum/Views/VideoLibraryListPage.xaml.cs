@@ -13,9 +13,9 @@ public partial class VideoLibraryListPage : ContentPage
 
     async void HandleSimplePopupButtonClicked(object sender, EventArgs e)
     {
-        await PopupButton.FadeTo(0, 150);
-        await PopupButton.FadeTo(1, 150);
-        var simplePopup = new VideoPopup();
-        await this.ShowPopupAsync(simplePopup);
+        //await PopupButton.FadeTo(0, 150);
+        //await PopupButton.FadeTo(1, 150);
+        //var simplePopup = new VideoPopup();
+        //await this.ShowPopupAsync(simplePopup);
     }
 }  

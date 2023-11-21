@@ -26,6 +26,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<VideoLibraryListPage>();
         builder.Services.AddSingleton<TextLibraryListPage>();
 
+        builder.Services.AddSingleton<TextStatistick>();
         builder.Services.AddSingleton<VideoStatistick>();
 
         builder.Services.AddTransient<IViewModel, VideoLibraryViewModel>();

@@ -105,9 +105,6 @@
 	  <MauiXaml Update="Views\VideoLibraryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\VideoPopup.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="Views\VideoStatistick.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

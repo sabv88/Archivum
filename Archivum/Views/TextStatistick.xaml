@@ -6,38 +6,66 @@
              Title="TextStatistick">
     <ScrollView >
         <StackLayout>
-            
-                <Label Text="Книги" FontSize="Large" Grid.ColumnSpan="2" Grid.Row="0" HorizontalOptions="Center" LineBreakMode="WordWrap" />
-            <Label Text="Прочитано книг" FontSize="Small" Grid.Row="1" LineBreakMode="WordWrap" />
-        <Label Text="{Binding BooksCount}" FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalOptions="Center"/>
 
-        <Label Text="Прочитано страниц книг" FontSize="Small"  LineBreakMode="WordWrap" Grid.Row="2"/>
-        <Label Text="{Binding BooksPagesCount}" FontSize="Small" Grid.Column="1" Grid.Row="2" HorizontalOptions="Center"/>
-            <Frame BackgroundColor="Black">
+
+            <Label Text="Книги" FontSize="Large" Grid.ColumnSpan="2" Grid.Row="0" HorizontalOptions="Center" LineBreakMode="WordWrap" Margin="10"/>
+
+            <Frame BackgroundColor="#1a162a">
                 <StackLayout>
-                    <Label  Text="Максимальное количество страниц в книге" FontSize="Small" LineBreakMode="WordWrap"/>
-                    <Label  Text="{Binding BooksMaxPagesAmount}" HorizontalOptions="Center" FontSize="Small"/>
+                    <Label Text="Прочитано книг" FontSize="Small" HorizontalOptions="CenterAndExpand" Grid.Row="1" LineBreakMode="WordWrap" />
+                    <Label Text="{Binding BooksCount}" FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalOptions="Center"/>
+                    </StackLayout>
+                </Frame>
 
+            <Frame BackgroundColor="#230d21">
+                <StackLayout>
+                    <Label Text="Прочитано страниц книг" HorizontalOptions="Center" FontSize="Small"  LineBreakMode="WordWrap" Grid.Row="2"/>
+                    <Label Text="{Binding BooksPagesCount}" HorizontalTextAlignment="Center" FontSize="Small" Grid.Column="1" Grid.Row="2" HorizontalOptions="Center"/>
                 </StackLayout>
             </Frame>
 
+            <Frame BackgroundColor="#42386b">
+                <StackLayout>
+                    <Label  Text="Максимальное количество страниц в книге" HorizontalOptions="Center" HorizontalTextAlignment="Center" FontSize="Small" LineBreakMode="WordWrap"/>
+                    <Label  Text="{Binding BooksMaxPagesAmount}" HorizontalOptions="Center" FontSize="Small"/>
+                </StackLayout>
+            </Frame>
 
-                <Label  Text="Минимальное количество страниц в книге" FontSize="Small"  Grid.Row="4" LineBreakMode="WordWrap"/>
+            <Frame BackgroundColor="#002266">
+                <StackLayout>
+                    <Label HorizontalOptions="Center" LineBreakMode="WordWrap" Text="Минимальное количество страниц в книге" FontSize="Small"  Grid.Row="4" />
         <Label  Text="{Binding BooksMinPagesAmount}"  Grid.Column="1" Grid.Row="4" FontSize="Small" HorizontalOptions="Center"/>
-        
-        <Label Text="Манга" FontSize="Large" Grid.ColumnSpan="2" Grid.Row="5" HorizontalOptions="Center" LineBreakMode="WordWrap" />
+                </StackLayout>
+            </Frame>
 
-        <Label  Text="Прочитано манги" FontSize="Small"  Grid.Row="6" LineBreakMode="WordWrap"/>
+            <Label Text="Манга" FontSize="Large" Grid.ColumnSpan="2" Grid.Row="5" HorizontalOptions="Center" LineBreakMode="WordWrap" Margin="10" />
+
+            <Frame BackgroundColor="#412227">
+                <StackLayout>
+                    <Label HorizontalOptions="Center" Text="Прочитано манги" FontSize="Small"  Grid.Row="6" LineBreakMode="WordWrap"/>
         <Label  Text="{Binding MangaCount}" Grid.Column="1" Grid.Row="6" FontSize="Small" HorizontalOptions="Center"/>
+                </StackLayout>
+            </Frame>
 
-        <Label Text="Прочитано страниц книг" FontSize="Small"  LineBreakMode="WordWrap" Grid.Row="7"/>
+            <Frame BackgroundColor="#712f26">
+                <StackLayout>
+                    <Label HorizontalOptions="Center" Text="Прочитано страниц книг" FontSize="Small"  LineBreakMode="WordWrap" Grid.Row="7"/>
         <Label Text="{Binding BooksPagesCount}" FontSize="Small" Grid.Column="1" Grid.Row="7" HorizontalOptions="Center"/>
-
-        <Label  Text="Максимальное количество страниц в манге" FontSize="Small"  Grid.Row="8" LineBreakMode="WordWrap"/>
+                </StackLayout>
+            </Frame>
+            <Frame BackgroundColor="#5e2129">
+                <StackLayout>
+                    <Label HorizontalOptions="Center" Text="Максимальное количество страниц в манге" FontSize="Small"  Grid.Row="8" LineBreakMode="WordWrap"/>
         <Label  Text="{Binding MangaMaxPagesAmount}" Grid.Column="1" Grid.Row="8" FontSize="Small" HorizontalOptions="Center"/>
+                </StackLayout>
+            </Frame>
 
-        <Label  Text="Минимальное количество страниц в манге" FontSize="Small"  Grid.Row="9" LineBreakMode="WordWrap"/>
-        <Label  Text="{Binding MangaMinPagesAmount}" Grid.Column="1" Grid.Row="9" FontSize="Small" HorizontalOptions="Center"/>
+            <Frame BackgroundColor="#5c0014">
+                <StackLayout>
+                    <Label HorizontalOptions="Center" Text="Минимальное количество страниц в манге" FontSize="Small"  Grid.Row="9" LineBreakMode="WordWrap"/>
+                    <Label  Text="{Binding MangaMinPagesAmount}" Grid.Column="1" Grid.Row="9" FontSize="Small" HorizontalOptions="Center"/>
+                </StackLayout>
+            </Frame>
         </StackLayout>
     </ScrollView>
 </ContentPage>

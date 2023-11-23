@@ -37,6 +37,7 @@ public class TextLibraryViewModel : BaseViewModel, IViewModel
             }
 
             MemoryStream ms = new MemoryStream(cover);
+            
             return ImageSource.FromStream(() => ms);
         }
     }

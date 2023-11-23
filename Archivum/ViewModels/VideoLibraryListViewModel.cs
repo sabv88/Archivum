@@ -167,7 +167,22 @@ public partial class VideoLibraryListViewModel : BaseViewModel, INotifyPropertyC
         }
         else
         {
-            string query = "SELECT * FROM [VideoMaterial] Where Name LIKE '" + filter + "'";
+            if(Filter == "Аниме")
+            {
+                Filter = "Anime";
+            }
+
+            if (Filter == "Фильм")
+            {
+                Filter = "Film";
+            }
+
+            if (Filter == "Сериал")
+            {
+                Filter = "Serial";
+            }
+
+            string query = "SELECT * FROM ["+ Filter + "]";
             var a = await repository.ExecuteRequest<Material>(query);
             MainThread.BeginInvokeOnMainThread(() =>
             {

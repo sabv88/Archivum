@@ -32,7 +32,6 @@
                     ItemsSource="{Binding Collection}"
                     SelectionMode="Single"
                     SelectedItem="{Binding SelectedVM, Mode=TwoWay}"
-                    RemainingItemsThreshold ="1" RemainingItemsThresholdReachedCommand="{Binding next}"
                     VerticalOptions="FillAndExpand"
                    >
             <CollectionView.ItemsLayout>
@@ -47,7 +46,10 @@
                         </StackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-            </CollectionView>
-
+        </CollectionView>
+        <HorizontalStackLayout HorizontalOptions="CenterAndExpand">
+            <Button Margin="5" Text="Назад" HorizontalOptions="StartAndExpand" Command="{Binding next}"/>
+            <Button Margin="5" Text="Далее" HorizontalOptions="EndAndExpand" Command="{Binding prev}"/>
+        </HorizontalStackLayout>
     </StackLayout>
 </ContentPage>

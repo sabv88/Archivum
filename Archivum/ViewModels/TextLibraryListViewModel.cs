@@ -19,7 +19,11 @@ public class TextLibraryListViewModel : INotifyPropertyChanged
     IViewModel selectedVM;
 
     public string Filter
-    {
+    { 
+        get
+        {
+            return filter;
+        }
         set
         {
             start = 0;
@@ -27,10 +31,7 @@ public class TextLibraryListViewModel : INotifyPropertyChanged
             Collection.Clear();
             _ = GetNextItemsAsync(value);
         }
-        get
-        {
-            return filter;
-        }
+       
     }
     public IViewModel SelectedVM
     {
@@ -85,15 +86,15 @@ public class TextLibraryListViewModel : INotifyPropertyChanged
         Filter = "Все";
     });
     public ICommand next { get; }
+    public ICommand prev { get; }
 
 
 
     public TextLibraryListViewModel(IRepository repository)
     {
         this.repository = repository;
-        Filter = "Все";
         Subsribes();
-        GetItems = new Command(GetItemsAsync);
+        GetItems = new AsyncRelayCommand<string>(GetPrevItemsAsync);
         TapItem = new AsyncRelayCommand<IViewModel>(TapItemAsync);
         next = new AsyncRelayCommand<string>(GetNextItemsAsync);
 
@@ -106,20 +107,18 @@ public class TextLibraryListViewModel : INotifyPropertyChanged
             handler(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    public async void GetItemsAsync()
+    public async Task GetPrevItemsAsync(string filter)
     {
-        var items = await repository.GetItemsAsync<Material>();
-        MainThread.BeginInvokeOnMainThread(() =>
+        if(start - 10 < 0)
         {
-            Collection.Clear();
-            foreach (var item in items)
-            {
-                Collection.Add(new TextLibraryViewModel(item, new Repository()));
-            }
+            start = 0;
+        }
+        else
+        {
+            start -= 10;
+        }
 
-        });
-
-        OnPropertyChanged("textMaterials");
+        _ = GetNextItemsAsync(filter);
     }
 
 
@@ -127,7 +126,7 @@ public class TextLibraryListViewModel : INotifyPropertyChanged
     {
         if (Filter == "Все")
         {
-            string query = "SELECT * FROM [Book] LIMIT " + start + ", " + 2;
+            string query = "SELECT * FROM  [Book] ORDER BY Name LIMIT " + start + ", " + 10;
             var bookList = await repository.ExecuteRequest<Book>(query);
             MainThread.BeginInvokeOnMainThread(() =>
             {
@@ -139,7 +138,7 @@ public class TextLibraryListViewModel : INotifyPropertyChanged
 
             });
 
-            query = "SELECT * FROM [Manga] LIMIT " + start + ", " + 2;
+            query = "SELECT * FROM [Manga] ORDER BY Name LIMIT " + start + ", " + 10;
             var mangaList = await repository.ExecuteRequest<Manga>(query);
             MainThread.BeginInvokeOnMainThread(() =>
             {
@@ -151,7 +150,7 @@ public class TextLibraryListViewModel : INotifyPropertyChanged
 
             });
 
-            query = "SELECT * FROM [TextMaterial] LIMIT " + start + ", " + 2;
+            query = "SELECT * FROM [TextMaterial] ORDER BY Name LIMIT " + start + ", " + 10;
             var a1 = await repository.ExecuteRequest<Material>(query);
             MainThread.BeginInvokeOnMainThread(() =>
             {
@@ -161,22 +160,40 @@ public class TextLibraryListViewModel : INotifyPropertyChanged
                 }
 
             });
-            start += 2;
+            start += 10;
 
         }
         else
         {
-            string query = "SELECT * FROM [TextMaterial] Where Name LIKE '" + filter + "'";
-            var a = await repository.ExecuteRequest<Material>(query);
-            MainThread.BeginInvokeOnMainThread(() =>
+            if (this.filter == "Манга")
             {
-                foreach (var item in a)
+                string query = "SELECT * FROM  [Manga] ORDER BY Name LIMIT " + start + ", " + 10;
+                var a = await repository.ExecuteRequest<Manga>(query);
+                MainThread.BeginInvokeOnMainThread(() =>
                 {
-                    Collection.Add(new VideoLibraryViewModel(item, new Repository()));
-                }
+                    foreach (var item in a)
+                    {
+                        Collection.Add(new MangaViewModel(item.ID, item.Name, item.Cover, repository, item.Comment, item.PagesAmount));
+                    }
 
-            });
-            start += 2;
+                });
+            }
+
+            if (this.filter == "Книга")
+            {
+                string query = "SELECT * FROM  [Book] ORDER BY Name LIMIT " + start + ", " + 10;
+                var a = await repository.ExecuteRequest<Book>(query);
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    foreach (var item in a)
+                    {
+                        Collection.Add(new BookViewModel(item.ID, item.Name, item.Cover, repository, item.Comment, item.PagesAmount));
+                    }
+
+                });
+            }
+            
+            start += 10;
 
         }
         OnPropertyChanged("videoMaterials");

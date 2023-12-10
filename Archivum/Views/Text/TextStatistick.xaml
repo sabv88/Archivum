@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Archivum.ViewModels"
+             x:Class="Archivum.Views.TextStatistick"
+                 Title="TextStatistick">
+    <ScrollView >
+        <StackLayout>
+
+
+            <Label Text="Книги" FontSize="Large" Grid.ColumnSpan="2" Grid.Row="0" HorizontalOptions="Center" LineBreakMode="WordWrap" Margin="10"/>
+
+            <Frame BackgroundColor="#1a162a">
+                <StackLayout>
+                    <Label Text="Прочитано книг" FontSize="Small" HorizontalOptions="CenterAndExpand" Grid.Row="1" LineBreakMode="WordWrap" />
+                    <Label Text="{Binding BooksCount}" FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalOptions="Center"/>
+                </StackLayout>
+            </Frame>
+
+            <Frame BackgroundColor="#230d21">
+                <StackLayout>
+                    <Label Text="Прочитано страниц книг" HorizontalOptions="Center" FontSize="Small"  LineBreakMode="WordWrap" Grid.Row="2"/>
+                    <Label Text="{Binding BooksPagesCount}" HorizontalTextAlignment="Center" FontSize="Small" Grid.Column="1" Grid.Row="2" HorizontalOptions="Center"/>
+                </StackLayout>
+            </Frame>
+
+            <Frame BackgroundColor="#42386b">
+                <StackLayout>
+                    <Label  Text="Максимальное количество страниц в книге" HorizontalOptions="Center" HorizontalTextAlignment="Center" FontSize="Small" LineBreakMode="WordWrap"/>
+                    <Label  Text="{Binding BooksMaxPagesAmount}" HorizontalOptions="Center" FontSize="Small"/>
+                </StackLayout>
+            </Frame>
+
+            <Frame BackgroundColor="#002266">
+                <StackLayout>
+                    <Label HorizontalOptions="Center" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" Text="Минимальное количество страниц в книге" FontSize="Small"  Grid.Row="4" />
+                    <Label  Text="{Binding BooksMinPagesAmount}"  Grid.Column="1" Grid.Row="4" FontSize="Small" HorizontalOptions="Center"/>
+                </StackLayout>
+            </Frame>
+
+            <Label Text="Манга" FontSize="Large" Grid.ColumnSpan="2" Grid.Row="5" HorizontalOptions="Center" LineBreakMode="WordWrap" Margin="10" />
+
+            <Frame BackgroundColor="#412227">
+                <StackLayout>
+                    <Label HorizontalOptions="Center" Text="Прочитано манги" FontSize="Small"  Grid.Row="6" LineBreakMode="WordWrap"/>
+                    <Label  Text="{Binding MangaCount}"  FontSize="Small" HorizontalOptions="Center"/>
+                </StackLayout>
+            </Frame>
+
+            <Frame BackgroundColor="#712f26">
+                <StackLayout>
+                    <Label HorizontalOptions="Center" Text="Прочитано страниц манги" FontSize="Small"  LineBreakMode="WordWrap"/>
+                    <Label Text="{Binding BooksPagesCount}" FontSize="Small"  HorizontalOptions="Center"/>
+                </StackLayout>
+            </Frame>
+            <Frame BackgroundColor="#5e2129">
+                <StackLayout>
+                    <Label HorizontalOptions="Center" HorizontalTextAlignment="Center" Text="Максимальное количество страниц в манге" FontSize="Small" LineBreakMode="WordWrap"/>
+                    <Label  Text="{Binding MangaMaxPagesAmount}" FontSize="Small" HorizontalOptions="Center"/>
+                </StackLayout>
+            </Frame>
+
+            <Frame BackgroundColor="#5c0014">
+                <StackLayout>
+                    <Label HorizontalOptions="Center" HorizontalTextAlignment="Center" Text="Минимальное количество страниц в манге" FontSize="Small"  LineBreakMode="WordWrap"/>
+                    <Label  Text="{Binding MangaMinPagesAmount}" Grid.Column="1" Grid.Row="9" FontSize="Small" HorizontalOptions="Center"/>
+                </StackLayout>
+            </Frame>
+
+            <Label Text="Итого" FontSize="Large" Grid.ColumnSpan="2" Grid.Row="5" HorizontalOptions="Center" LineBreakMode="WordWrap" Margin="10" />
+
+            <Frame BackgroundColor="#c4951d">
+                <StackLayout>
+                    <Label HorizontalOptions="Center" Text="Всего манги, книг" FontSize="Small"  LineBreakMode="WordWrap"/>
+                    <Label  Text="{Binding AllCount}" Grid.Column="1" Grid.Row="9" FontSize="Small" HorizontalOptions="Center"/>
+                </StackLayout>
+            </Frame>
+
+            <Frame BackgroundColor="#8b8940">
+                <StackLayout>
+                    <Label HorizontalOptions="Center" Text="Всего страниц" FontSize="Small" LineBreakMode="WordWrap"/>
+                    <Label  Text="{Binding AllPages}" Grid.Column="1" Grid.Row="9" FontSize="Small" HorizontalOptions="Center"/>
+                </StackLayout>
+            </Frame>
+            
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

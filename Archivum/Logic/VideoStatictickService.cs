@@ -1,4 +1,5 @@
-﻿using Archivum.Models;
+﻿using Archivum.Interfaces;
+using Archivum.Models.Video;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Archivum.Logic
 {
-   public class VideoStatictickService
+    public class VideoStatictickService: IVideoStatictickService
     {
         readonly IRepository repository;
 
@@ -20,7 +21,7 @@ namespace Archivum.Logic
         public async Task<int> GetAnimeCountAsync()
         {
             string query = "select count(*) from Anime";
-            return await repository.ExecuteScalar<Anime>(query);;
+            return await repository.ExecuteScalar<Anime>(query);
         }
 
         public async Task<int> GetAnimeSeriesCount()
@@ -99,43 +100,43 @@ namespace Archivum.Logic
 
         public async Task<int> GetSeriesCountAsync()
         {
-            string query = "select count(*) from Series";
+            string query = "select count(*) from Serial";
             return await repository.ExecuteScalar<Anime>(query); ;
         }
 
         public async Task<int> GetSeriesSeriesCount()
         {
-            string query = "SELECT Sum(SeriesCount) FROM [Series]";
+            string query = "SELECT Sum(SeriesCount) FROM [Serial]";
             return await repository.ExecuteScalar<Anime>(query);
         }
 
         public async Task<int> GetSeriesSeriesLengthSum()
         {
-            string query = "SELECT Sum(Serieslength) FROM [Series]";
+            string query = "SELECT Sum(Serieslength) FROM [Serial]";
             return await repository.ExecuteScalar<Anime>(query);
         }
 
         public async Task<int> GetSeriesMaxSeriesCount()
         {
-            string query = "SELECT Max(SeriesCount) FROM [Series]";
+            string query = "SELECT Max(SeriesCount) FROM [Serial]";
             return await repository.ExecuteScalar<Anime>(query);
         }
 
         public async Task<int> GetSeriesMinSeriesCount()
         {
-            string query = "SELECT Min(SeriesCount) FROM [Series]";
+            string query = "SELECT Min(SeriesCount) FROM [Serial]";
             return await repository.ExecuteScalar<Anime>(query);
         }
 
         public async Task<int> GetSeriesMaxSeriesLength()
         {
-            string query = "SELECT Max(SeriesLength) FROM [Series]";
+            string query = "SELECT Max(SeriesLength) FROM [Serial]";
             return await repository.ExecuteScalar<Anime>(query);
         }
 
         public async Task<int> GetSeriesMinSeriesLength()
         {
-            string query = "SELECT Min(SeriesLength) FROM [Series]";
+            string query = "SELECT Min(SeriesLength) FROM [Serial]";
             return await repository.ExecuteScalar<Anime>(query);
         }
         #endregion

@@ -1,5 +1,6 @@
 ﻿using Archivum.ViewModels;
 using Archivum.Views;
+using Archivum.Views.Games;
 
 namespace Archivum;
 
@@ -17,10 +18,13 @@ public partial class AppShell : Shell
     {
         Routes.Add("videolibraryPage", typeof(VideoLibraryPage));
         Routes.Add("videolibraryListPage", typeof(VideoLibraryListPage));
+        Routes.Add("gameslibraryListPage", typeof(GamesLibraryListPage));
         Routes.Add("textlibraryListPage", typeof(TextLibraryListPage));
         Routes.Add("textlibraryPage", typeof(TextLibraryPage));
+        Routes.Add("gamesLibraryPage", typeof(GamePage));
         Routes.Add("videoStatictickPage", typeof(VideoStatistick));
         Routes.Add("textStatictickPage", typeof(TextStatistick));
+        Routes.Add("gamesStatictickPage", typeof(GamesStatistick));
         Routes.Add("serialPage", typeof(SerialPage));
         Routes.Add("animePage", typeof(AnimePage));
         Routes.Add("filmPage", typeof(FilmPage));
@@ -28,6 +32,8 @@ public partial class AppShell : Shell
         Routes.Add("bookPage", typeof(BookPage));
         Routes.Add("mangaPage", typeof(MangaPage));
         Routes.Add("addPageText", typeof(AddPageText));
+        Routes.Add("addPageGames", typeof(AddPageGames));
+
 
         foreach (var item in Routes)
         {

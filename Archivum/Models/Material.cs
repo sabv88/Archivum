@@ -1,4 +1,5 @@
-﻿using Archivum.Logic;
+﻿using Archivum.Interfaces;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,11 @@ namespace Archivum.Models;
 
 public class Material: IModel
 {
+    [PrimaryKey, AutoIncrement]
     public int ID { get; set; }
     public string Name { get; set; }
     public byte[] Cover { get; set; } = new byte[0];
+
     public Material()
     {
 

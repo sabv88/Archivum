@@ -31,7 +31,6 @@
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
-
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
 
@@ -40,12 +39,10 @@
 		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
     <MauiImage Update="Resources\Images\checkmark.svg" />
     <MauiImage Update="Resources\Images\close.svg" />
-    <MauiImage Update="Resources\Images\info.svg" TintColor="#512BD4" />
     <MauiImage Update="Resources\Images\picture1.svg" TintColor="#512BD4" />
     <MauiImage Update="Resources\Images\plus.svg" TintColor="#512BD4" />
     <MauiImage Update="Resources\Images\visual_game_boy.svg" />
     <MauiImage Update="Resources\Images\youtube.svg" />
-    <MauiImage Update="Resources\Images\down.svg" TintColor="#512BD4" />
 
     <!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -55,57 +52,65 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\berserk_48px.svg" />
+	  <None Remove="Resources\Images\book_50px1.svg" />
+	  <None Remove="Resources\Images\breaking_bad.svg" />
 	  <None Remove="Resources\Images\coderwall1.svg" />
-	  <None Remove="Resources\Images\down.svg" />
-	  <None Remove="Resources\Images\down1.svg" />
-	  <None Remove="Resources\Images\info1.svg" />
 	  <None Remove="Resources\Images\picture1.svg" />
+	  <None Remove="Resources\Images\popcorn_time.svg" />
+	  <None Remove="Resources\Images\waifu_50px.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\AddPage.xaml">
+	  <MauiXaml Update="Views\Games\AddPageGames.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\AddPageText.xaml">
+	  <MauiXaml Update="Views\Games\GamePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\AnimePage.xaml">
+	  <MauiXaml Update="Views\Games\GamesStatistick.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\BookPage.xaml">
+	  <MauiXaml Update="Views\Video\AddPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\FilmPage.xaml">
+	  <MauiXaml Update="Views\Text\AddPageText.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\GamesLibraryListPage.xaml">
+	  <MauiXaml Update="Views\Video\AnimePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\MangaPage.xaml">
+	  <MauiXaml Update="Views\Text\BookPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\SerialPage.xaml">
+	  <MauiXaml Update="Views\Video\FilmPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\TextLibraryPage.xaml">
+	  <MauiXaml Update="Views\Games\GamesLibraryListPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\TextLibraryListPage.xaml">
+	  <MauiXaml Update="Views\Text\MangaPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\TextPopup.xaml">
+	  <MauiXaml Update="Views\Video\SerialPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\TextStatistick.xaml">
+	  <MauiXaml Update="Views\Text\TextLibraryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\VideoLibraryListPage.xaml">
+	  <MauiXaml Update="Views\Text\TextLibraryListPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\VideoLibraryPage.xaml">
+	  <MauiXaml Update="Views\Text\TextStatistick.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\VideoStatistick.xaml">
+	  <MauiXaml Update="Views\Video\VideoLibraryListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Video\VideoLibraryPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Video\VideoStatistick.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
@@ -120,13 +125,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\TextLibraryPage.xaml.cs">
+	  <Compile Update="Views\Text\TextLibraryPage.xaml.cs">
 	    <DependentUpon>TextLibraryPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\VideoLibraryListPage.xaml.cs">
+	  <Compile Update="Views\Video\VideoLibraryListPage.xaml.cs">
 	    <DependentUpon>VideoLibraryListPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\VideoLibraryPage.xaml.cs">
+	  <Compile Update="Views\Video\VideoLibraryPage.xaml.cs">
 	    <DependentUpon>VideoLibraryPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>

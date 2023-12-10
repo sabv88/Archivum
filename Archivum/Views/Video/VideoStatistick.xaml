@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Archivum.ViewModels"
+             x:Class="Archivum.Views.VideoStatistick"
+             Shell.TabBarIsVisible="False">
+  <ScrollView>
+      
+        <VerticalStackLayout>
+            <Label Text="Аниме" FontSize="Large" Grid.ColumnSpan="2" Grid.Row="5" HorizontalOptions="Center" LineBreakMode="WordWrap" Margin="10" />
+
+            <Frame Background="#4d5645">
+                <StackLayout Spacing="5">
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="Просмотренно" FontSize="Small" />
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="{Binding AnimeCount}" FontSize="Small" />
+                </StackLayout>
+             </Frame>
+
+            <Frame Background="#4d5d53">
+                <StackLayout Spacing="5">
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="Просмотренно серий аниме" FontSize="Small" />
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="{Binding AnimeSeriesCount}" FontSize="Small" />
+                </StackLayout>
+            </Frame>
+            <Frame Background="#424632">
+                <StackLayout Spacing="5">
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="Просмотренно минут аниме" FontSize="Small" />
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="{Binding AnimeSeriesLengthSum}" FontSize="Small" />
+                </StackLayout>
+            </Frame>
+
+            <Frame Background="#27261a">
+                <StackLayout Spacing="5">
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="Максимальное колличество серий в тайтле" FontSize="Small" />
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="{Binding AnimeMaxSeriesCount}" FontSize="Small" />
+                </StackLayout>
+            </Frame>
+
+            <Frame Background="#303830">
+                <StackLayout Spacing="5">
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="Минимальное колличество серий в тайтле" FontSize="Small" />
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="{Binding AnimeMinSeriesCount}" FontSize="Small" />
+                </StackLayout>
+            </Frame>
+
+            <Frame Background="#5c6648">
+                <StackLayout Spacing="5">
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="Максимальная длинна серии в тайтле" FontSize="Small" />
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="{Binding AnimeMaxSeriesLength}" FontSize="Small" />
+                </StackLayout>
+            </Frame>
+
+            <Frame Background="#465945">
+                <StackLayout Spacing="5">
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="Минимальная длинна серий в тайтле" FontSize="Small" />
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="{Binding AnimeMinSeriesLength}" FontSize="Small" />
+                </StackLayout>
+            </Frame>
+
+            <Label Text="Фильмы" FontSize="Large" Grid.ColumnSpan="2" Grid.Row="5" HorizontalOptions="Center" LineBreakMode="WordWrap" Margin="10" />
+
+            <Frame Background="#543964">
+                <StackLayout Spacing="5">
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="Просмотренно" FontSize="Small"/>
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="{Binding FilmsCount}" FontSize="Small"/>
+                </StackLayout>
+            </Frame>
+
+            <Frame Background="#3a2745">
+                <StackLayout Spacing="5">
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="Просмотренно минут в фильмах" FontSize="Small"/>
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="{Binding FilmlengthSum}" FontSize="Small"/>
+                </StackLayout>
+            </Frame>
+
+            <Frame Background="#1e1424">
+                <StackLayout Spacing="5">
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="Максимальная длинна фильма" FontSize="Small"/>
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="{Binding FilmlengthMax}" FontSize="Small"/>
+                </StackLayout>
+            </Frame>
+
+            <Frame Background="#1a162a">
+                <StackLayout Spacing="5">
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="Минимальная длинна фильма" FontSize="Small"/>
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="{Binding FilmlengthMin}" FontSize="Small"/>
+                </StackLayout>
+            </Frame>
+
+            <Label Text="Сериалы" FontSize="Large" Grid.ColumnSpan="2" Grid.Row="5" HorizontalOptions="Center" LineBreakMode="WordWrap" Margin="10" />
+
+            <Frame Background="#7d7f7d">
+                <StackLayout Spacing="5">
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="Просмотренно Сериалов" FontSize="Small"/>
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="{Binding SeriesCount}" FontSize="Small"/>
+                </StackLayout>
+            </Frame>
+
+            <Frame Background="#898176">
+                <StackLayout Spacing="5">
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="Всего просмотренно серий сериалов" FontSize="Small"/>
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="{Binding SeriesSeriesCount}" FontSize="Small"/>
+                </StackLayout>
+            </Frame>
+
+            <Frame Background="#7f7679">
+                <StackLayout Spacing="5">
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="Просмотренно минут сериалов" FontSize="Small" />
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="{Binding SerieslengthSum}" FontSize="Small" />
+                </StackLayout>
+            </Frame>
+
+            <Frame Background="#7f877e">
+                <HorizontalStackLayout Margin="20" Spacing="10">
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="Максимальное колличество серий в тайтле" FontSize="Small" />
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="{Binding SeriesMaxSeriesCount}" FontSize="Small" />
+                </HorizontalStackLayout>
+            </Frame>
+
+            <Frame Background="#666666">
+                <StackLayout Spacing="5">
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="Минимальное колличество серий в тайтле" FontSize="Small" />
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="{Binding SeriesMinSeriesCount}" FontSize="Small" />
+                </StackLayout>
+            </Frame>
+
+            <Frame Background="#6c6874">
+                <StackLayout Spacing="5">
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="Максимальная длинна серии" FontSize="Small"/>
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="{Binding SerieslengthMax}" FontSize="Small"/>
+                </StackLayout>
+            </Frame>
+
+            <Frame Background="#7b8a9c">
+                <StackLayout Spacing="5">
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="Минимальная длинна серии" FontSize="Small"/>
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="{Binding SerieslengthMin}" FontSize="Small"/>
+                </StackLayout>
+            </Frame>
+
+            <Label Text="Итого" FontSize="Large" Grid.ColumnSpan="2" Grid.Row="5" HorizontalOptions="Center" LineBreakMode="WordWrap" Margin="10" />
+
+            <Frame Background="#1f3438">
+                <StackLayout Spacing="5">
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="Всего просмотренно аниме, фильмов и сериалов" FontSize="Small"/>
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="{Binding AllCount}" FontSize="Small"/>
+                </StackLayout>
+            </Frame>
+
+            <Frame Background="#003841">
+                <StackLayout Spacing="5">
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="Всего просмотренно аниме, фильмов и сериалов" FontSize="Small"/>
+                    <Label HorizontalTextAlignment="Center" HorizontalOptions="Center" LineBreakMode="WordWrap" Text="{Binding AllTime}" FontSize="Small"/>
+                </StackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+  </ScrollView>
+
+</ContentPage>

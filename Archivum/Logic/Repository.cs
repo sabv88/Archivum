@@ -1,4 +1,5 @@
-﻿using Archivum.Models;
+﻿using Archivum.Interfaces;
+using Archivum.Models;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -23,32 +24,40 @@ namespace Archivum.Logic
                 Database = new SQLiteAsyncConnection(Constants.DatabasePath, Constants.Flags);
             }
 
-            _ = await Database.CreateTableAsync<T>();
+            _ = await Database.CreateTableAsync<T>().ConfigureAwait(false);
         }
 
         public async Task<List<T>> GetItemsAsync<T>() where T : new()
         {
             await Init<T>();
-            return await Database.Table<T>().ToListAsync();
+            return await Database.Table<T>().ToListAsync().ConfigureAwait(false);
         }
 
         public async Task<List<T>> ExecuteRequest<T>(string query) where T : new()
         {
             await Init<T>();
+            return await Database.QueryAsync<T>(query).ConfigureAwait(false);
+        }
+
+        public async Task<List<T>> SelectModels<T>(string query) where T : IModel, new()
+        {
+            await Init<T>();
             return await Database.QueryAsync<T>(query);
         }
+
 
         public async Task<int> ExecuteScalar<T>(string query) where T : new()
         {
             await Init<T>();
 
-            return await Database.ExecuteScalarAsync<int>(query);
+            return await Database.ExecuteScalarAsync<int>(query).ConfigureAwait(false);
         }
 
         public async Task<int> DeleteItemAsync<T>(T item) where T : new()
         {
             await Init<T>();
-            return await Database.DeleteAsync(item);
+            var a = await Database.DeleteAsync(item).ConfigureAwait(false);
+            return a;
         }
 
         public async Task<int> SaveItemAsync<T>(T item, int Id) where T : new()
@@ -56,11 +65,11 @@ namespace Archivum.Logic
             await Init<T>();
             if (Id != 0)
             {
-                return await Database.UpdateAsync(item);
+                return await Database.UpdateAsync(item).ConfigureAwait(false);
             }
             else
             {
-                return await Database.InsertAsync(item);
+                return await Database.InsertAsync(item, typeof(T)).ConfigureAwait(false);
             }
 
         }
@@ -68,13 +77,13 @@ namespace Archivum.Logic
         public async Task<T> GetItemAsync<T>(int Id) where T : IModel, new()
         {
             await Init<T>();
-            return await Database.Table<T>().Where(i => i.ID == Id).FirstOrDefaultAsync();
+            return await Database.Table<T>().Where(i => i.ID == Id).FirstOrDefaultAsync().ConfigureAwait(false);
         }
 
         public async Task<int> GetCount<T>() where T : new()
         {
             await Init<T>();
-            return await Database.Table<T>().CountAsync();
+            return await Database.Table<T>().CountAsync().ConfigureAwait(false);
         }
     }
 }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Archivum.Views.AnimePage"
+             xmlns:local="clr-namespace:Archivum.ViewModels"
+             Title="{Binding Name}"
+             Shell.TabBarIsVisible="False"
+             >
+ 
+    <ScrollView>
+
+        <StackLayout x:Name="hg" Margin="5" >
+            <Image Source="{Binding Cover}" Aspect = "AspectFill">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding AddImage}"/>
+                </Image.GestureRecognizers>
+            </Image >
+
+            <Frame Background="#4d5645">
+                <StackLayout Spacing="5">
+                    <Label HorizontalTextAlignment="Center" Text="Название" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
+                    <Entry HorizontalTextAlignment="Center" Text="{Binding Name, Mode=TwoWay}" />
+                </StackLayout>
+            </Frame>
+
+            <Label Text="Аниме" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
+
+            <Frame Background="#4d5d53">
+                <StackLayout Spacing="5">
+                    <Label HorizontalTextAlignment="Center" Text="Количество серий" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
+                    <Entry HorizontalTextAlignment="Center" Text="{Binding SeriesCount, Mode=TwoWay}" />
+                </StackLayout>
+            </Frame>
+
+            <Frame Background="#424632">
+                <StackLayout Spacing="5">
+                    <Label HorizontalTextAlignment="Center" Text="Длинна серии" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
+                    <Entry HorizontalTextAlignment="Center" Text="{Binding SeriesLength, Mode=TwoWay}" />
+                </StackLayout>
+            </Frame>
+
+            <Frame Background="#27261a">
+                <StackLayout Spacing="5">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                        <Image Source="waifu_50px" HorizontalOptions="Center"/>
+                        <Label HorizontalTextAlignment="Center" Text="Топ вайфу" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
+                    </StackLayout>
+                    <Entry HorizontalTextAlignment="Center" Text="{Binding Waifu, Mode=TwoWay}" />
+                </StackLayout>
+            </Frame>
+
+            <Frame Background="#303830">
+                <StackLayout Spacing="5">
+                    <Label HorizontalTextAlignment="Center" Text="Комментарий" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
+                    <Entry HorizontalTextAlignment="Center" Text="{Binding Comment, Mode=TwoWay}" />
+                </StackLayout>
+            </Frame>
+            
+           
+            <HorizontalStackLayout Spacing="20" HorizontalOptions="CenterAndExpand" Margin="10">
+                <Button Text="Добавить" x:Name="add" Command="{Binding SaveItem}" CommandParameter="{Binding }" CornerRadius="25" HorizontalOptions="StartAndExpand" />
+                <Button Text="Удалить" Command="{Binding deleteItem}" CommandParameter="{Binding}" CornerRadius="25" HorizontalOptions="EndAndExpand"/>
+            </HorizontalStackLayout>
+
+        </StackLayout>
+
+    </ScrollView>
+</ContentPage>

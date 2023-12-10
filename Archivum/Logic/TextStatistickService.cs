@@ -1,13 +1,10 @@
-﻿using Archivum.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Archivum.Interfaces;
+using Archivum.Models.Text;
+using Archivum.Models.Video;
 
 namespace Archivum.Logic
 {
-    internal class TextStatistickService
+    public class TextStatistickService: ITextStatictickService
     {
         readonly IRepository repository;
 

@@ -3,7 +3,7 @@
 The Archivum app designed to store information about movies, anime, TV series watched by the user, also about books and manga read and games played.
 
 ## Technologies Used
-— .NET 7<br>
+— .NET MAUI<br>
 — SQLite with Entity Framework<br>
 
 ## Installation

@@ -1,12 +1,5 @@
 ﻿using Archivum.Interfaces;
-using Archivum.Logic;
 using Archivum.Models.Text;
-using CommunityToolkit.Mvvm.Messaging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Archivum.ViewModels.Text
@@ -16,6 +9,20 @@ namespace Archivum.ViewModels.Text
     {
         string comment;
         int pagesAmount;
+        string chaptersAmount;
+
+        public string СhaptersAmount
+        {
+            get => chaptersAmount;
+            set
+            {
+                if (chaptersAmount != value)
+                {
+                    chaptersAmount = value;
+                    OnPropertyChanged(nameof(СhaptersAmount));
+                }
+            }
+        }
 
         public string Comment
         {
@@ -30,37 +37,24 @@ namespace Archivum.ViewModels.Text
             }
         }
 
-        public int PagesAmount
-        {
-            get => pagesAmount;
-            set
-            {
-                if (pagesAmount != value)
-                {
-                    pagesAmount = value;
-                    OnPropertyChanged(nameof(PagesAmount));
-                }
-            }
-        }
 
         public new ICommand SaveItem => new Command(async () =>
         {
-            _ = repository.SaveItemAsync(new Manga(ID, Name, cover, pagesAmount, comment), ID);
+            _ = repository.SaveItemAsync(new Manga(ID, Name, cover, status, estimation, comment,  chaptersAmount), ID);
         });
 
        new public ICommand DeleteItem => new Command(
      execute: async () =>
          {
-             _ = repository.DeleteItemAsync(new Manga(ID, Name, cover, pagesAmount, comment));
-             WeakReferenceMessenger.Default.Send(new DeleteTextItemMessage(this)); 
+             _ = repository.DeleteItemAsync(new Manga(ID, Name, cover, status, estimation, comment, chaptersAmount));
+             SendMessageDelete(status, this);
              await Shell.Current.GoToAsync($"..");
          });
 
         public MangaViewModel(IRepository repository) : base(repository) { }
-        public MangaViewModel(int ID, string Name, byte[] cover, IRepository repository, string Comment, int PagesAmount) : base(ID, Name, cover, repository)
+        public MangaViewModel(int ID, string Name, byte[] cover, int status, int estimation, IRepository repository, string Comment) : base(ID, Name, cover, status, estimation, repository)
         {
             this.Comment = Comment;
-            this.PagesAmount = PagesAmount;
         }
 
         public MangaViewModel(Manga manga, IRepository repository) : base(repository)
@@ -68,7 +62,9 @@ namespace Archivum.ViewModels.Text
             this.ID = manga.ID;
             this.Name = manga.Name;
             this.cover = manga.Cover;
-            this.PagesAmount = manga.PagesAmount;
+            this.status = manga.Status;
+            this.estimation = manga.Estimation;
+            this.chaptersAmount = manga.СhaptersAmount;
             this.Comment = manga.Comment;
         }
     }

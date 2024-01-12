@@ -12,6 +12,7 @@ namespace Archivum.Logic
     public class Repository : IRepository
     {
         public SQLiteAsyncConnection Database { get; set; }
+
         public Repository()
         {
 

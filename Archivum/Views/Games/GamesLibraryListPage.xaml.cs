@@ -4,7 +4,7 @@ namespace Archivum.Views;
 
 public partial class GamesLibraryListPage : ContentPage
 {
-	public GamesLibraryListPage(GamesListViewModel viewModel)
+	public GamesLibraryListPage(FinishedGamesList viewModel)
 	{
         this.BindingContext = viewModel;
         InitializeComponent();

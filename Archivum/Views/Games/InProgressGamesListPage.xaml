@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Archivum.Views.Games.InProgressGamesListPage"
+             xmlns:local="clr-namespace:Archivum.Logic">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Добавить" Order="Secondary" Command="{Binding AddItem}"/>
+        <ToolbarItem Text="Статистика" Order="Secondary"  Command="{Binding Statistick}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <local:ImageConverter x:Key="imageConverter" />
+    </ContentPage.Resources>
+    
+    <StackLayout >
+        <CollectionView
+                    ItemsSource="{Binding Collection}"
+                    SelectionMode="Single"
+                    SelectedItem="{Binding SelectedVM, Mode=TwoWay}"
+                    VerticalOptions="FillAndExpand"
+             RemainingItemsThreshold ="1" RemainingItemsThresholdReachedCommand="{Binding NextItems}"
+                   >
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Stroke="#C49B33"
+                    StrokeThickness="4"
+                    HorizontalOptions="FillAndExpand">
+
+                        <StackLayout>
+                            <Label HorizontalTextAlignment="Center" Text="{Binding Name}" FontSize="Large" HorizontalOptions="Center" />
+                        </StackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+</ContentPage>

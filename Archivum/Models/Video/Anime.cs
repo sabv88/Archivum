@@ -18,7 +18,7 @@ namespace Archivum.Models.Video
         {
 
         }
-        public Anime(int id, string name, string comment, byte[] cover, string waifu, int seriesCount, int serieslength) : base(id, name, cover)
+        public Anime(int id, string name, string comment, int status, int estimation, byte[] cover, string waifu, int seriesCount, int serieslength) : base(id, name, cover, status, estimation)
 
         {
             Comment = comment;

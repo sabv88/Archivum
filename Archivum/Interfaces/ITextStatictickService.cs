@@ -12,10 +12,22 @@ namespace Archivum.Interfaces
         Task<int> GetBookPagesSum();
         Task<int> GetBookPagesMaxAmount();
         Task<int> GetBookPagesMinAmount();
+        Task<int> GetBookСhaptersSum();
+        Task<int> GetBookChaptersMaxAmount();
+        Task<int> GetBookChaptersMinAmount();
+        Task<int> GetBookWatchedCount();
+        Task<int> GetBookInProgressCount();
+        Task<int> GetBookDroppedCount();
+        Task<int> GetBookInPlanCount();
 
         Task<int> GetMangaCountAsync();
-        Task<int> GetMangaPagesSum();
-        Task<int> GetMangaPagesMaxAmount();
-        Task<int> GetMangaPagesMinAmount();
+        Task<int> GetMangaСhaptersSum();
+        Task<int> GetMangaChaptersMinAmount();
+        Task<int> GetMangaChaptersMaxAmount(); 
+        Task<int> GetMangaWatchedCount();
+        Task<int> GetMangaInProgressCount();
+        Task<int> GetMangaDroppedCount();
+        Task<int> GetMangaInPlanCount();
+
     }
 }

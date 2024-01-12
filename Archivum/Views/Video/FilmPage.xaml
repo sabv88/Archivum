@@ -2,41 +2,76 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Archivum.Views.FilmPage"
-             xmlns:local="clr-namespace:Archivum.ViewModels"
+             xmlns:local="clr-namespace:Archivum.Logic"
              Title="{Binding Name}"
              Shell.TabBarIsVisible="False">
+    <ContentPage.Resources>
+        <local:StatusConverter x:Key="statusConverter" />
+        <local:EstimationConverter x:Key="estimationConverter" />
+        <local:ImageConverter x:Key="imageConverter" />
+
+    </ContentPage.Resources>
     <ScrollView>
 
         <StackLayout x:Name="hg" Margin="5" >
-            <Image Source="{Binding Cover}" Aspect = "AspectFill">
+            <Image Source="{Binding Cover, Converter={StaticResource imageConverter}}" Aspect = "AspectFill">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding AddImage}"/>
                 </Image.GestureRecognizers>
             </Image >
 
+            <Frame BackgroundColor="#6C5F89">
+                <StackLayout Spacing="5">
+                    <Label FontFamily="film" HorizontalTextAlignment="Center" Text="Название" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
+                    <Entry FontFamily="film" HorizontalTextAlignment="Center" Text="{Binding Name, Mode=TwoWay}" />
+                </StackLayout>
+            </Frame>
+            <Frame BackgroundColor="#502C9E">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                    <Image Source="popcorn_time" HorizontalOptions="Center"/>
+                    <Label FontFamily="film" Text="Фильм" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
+                </StackLayout>
+            </Frame>
+
+            <Frame BackgroundColor="#C78EE9">
+                <StackLayout Spacing="5">
+                    <Label FontFamily="film" HorizontalTextAlignment="Center" Text="Статус" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
+                    <Picker FontFamily="film" HorizontalTextAlignment="Center"  SelectedItem="{Binding Status, Mode=TwoWay, Converter={StaticResource statusConverter}}">
+                        <Picker.Items>
+                            <x:String>Завершенно</x:String>
+                            <x:String>В процессе</x:String>
+                            <x:String>Брошено</x:String>
+                            <x:String>В планах</x:String>
+                        </Picker.Items>
+                    </Picker>
+                </StackLayout>
+            </Frame>
+            
             <Frame Background="#543964">
                 <StackLayout Spacing="5">
-                    <Label HorizontalTextAlignment="Center" Text="Название" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
-                    <Entry HorizontalTextAlignment="Center" Text="{Binding Name, Mode=TwoWay}" />
+                    <Label FontFamily="film" HorizontalTextAlignment="Center" Text="Оценка" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
+                    <Picker FontFamily="film" HorizontalTextAlignment="Center" SelectedItem="{Binding Estimation, Mode=TwoWay, Converter={StaticResource estimationConverter}}" >
+                        <Picker.Items>
+                            <x:String>Легенда</x:String>
+                            <x:String>Super good</x:String>
+                            <x:String>It's okay</x:String>
+                            <x:String>Не очень</x:String>
+                            <x:String>Говно</x:String>
+                        </Picker.Items>
+                    </Picker>
                 </StackLayout>
             </Frame>
-
-            <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-                <Image Source="popcorn_time" HorizontalOptions="Center"/>
-                <Label Text="Фильм" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
-            </StackLayout>
-            
             <Frame Background="#3a2745">
                 <StackLayout Spacing="5">
-                    <Label HorizontalTextAlignment="Center" Text="Длительность" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
-                    <Entry HorizontalTextAlignment="Center" Text="{Binding Filmlength, Mode=TwoWay}" />
+                    <Label FontFamily="film" HorizontalTextAlignment="Center" Text="Длительность (в минутах)" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
+                    <Entry FontFamily="film" HorizontalTextAlignment="Center" Text="{Binding Filmlength, Mode=TwoWay}" />
                 </StackLayout>
             </Frame>
 
-            <Frame Background="#1e1424">
+            <Frame Background="#1e1424" BackgroundColor="#000000">
                 <StackLayout Spacing="5">
-                    <Label HorizontalTextAlignment="Center" Text="Комментарий" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
-                    <Entry HorizontalTextAlignment="Center" Text="{Binding Comment, Mode=TwoWay}" />
+                    <Label FontFamily="film" HorizontalTextAlignment="Center" Text="Комментарий" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
+                    <Entry FontFamily="film" HorizontalTextAlignment="Center" Text="{Binding Comment, Mode=TwoWay}" />
                 </StackLayout>
             </Frame>
          

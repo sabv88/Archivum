@@ -1,23 +1,51 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:Archivum"
-             x:Class="Archivum.VideoLibraryPage"             
+             x:Class="Archivum.VideoLibraryPage" 
+             xmlns:local="clr-namespace:Archivum.Logic"
              Title="{Binding Name}"
              Shell.TabBarIsVisible="False">
+    <ContentPage.Resources>
+        <local:StatusConverter x:Key="statusConverter" />
+        <local:EstimationConverter x:Key="estimationConverter" />
+        <local:ImageConverter x:Key="imageConverter" />
+
+    </ContentPage.Resources>
     <ScrollView>
 
         <StackLayout x:Name="hg" Margin="5" >
-            <Image Source="{Binding Cover}" Aspect = "AspectFill">
+            <Image Source="{Binding Cover, Converter={StaticResource imageConverter}}" Aspect = "AspectFill">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding AddImage}"/>
                 </Image.GestureRecognizers>
             </Image >
             <Label Text="Название" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
             <Entry Text="{Binding Name, Mode=TwoWay}" />
+            <Label HorizontalTextAlignment="Center" Text="Статус" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
+
+            <Picker HorizontalTextAlignment="Center" SelectedItem="{Binding Status, Mode=TwoWay, Converter={StaticResource statusConverter}}">
+                <Picker.Items>
+                    <x:String>Завершенно</x:String>
+                    <x:String>В процессе</x:String>
+                    <x:String>Брошено</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <Label HorizontalTextAlignment="Center" Text="Оценка" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
+
+            <Picker HorizontalTextAlignment="Center" SelectedItem="{Binding Estimation, Mode=TwoWay, Converter={StaticResource estimationConverter}}" >
+                <Picker.Items>
+                    <x:String>Легенда</x:String>
+                    <x:String>Super good</x:String>
+                    <x:String>It's okay</x:String>
+                    <x:String>Не очень</x:String>
+                    <x:String>Говно</x:String>
+                </Picker.Items>
+            </Picker>
             <Label Text="Комментарий" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
             <Entry Text="{Binding Comment, Mode=TwoWay}" />
 
+            
             <HorizontalStackLayout Spacing="20" HorizontalOptions="CenterAndExpand" Margin="10">
                 <Button Text="Добавить" x:Name="add" Command="{Binding SaveItem}" CommandParameter="{Binding }" CornerRadius="25" HorizontalOptions="StartAndExpand" />
                 <Button Text="Удалить" Command="{Binding DeleteItem}" CommandParameter="{Binding}" CornerRadius="25" HorizontalOptions="EndAndExpand"/>

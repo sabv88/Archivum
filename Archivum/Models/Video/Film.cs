@@ -9,7 +9,7 @@ namespace Archivum.Models.Video
         public int Filmlength { get; set; }
 
         public Film() { }
-        public Film(int id, string name, string comment, byte[] cover, int filmlength) : base(id, name, cover)
+        public Film(int id, string name, string comment, byte[] cover, int status, int estimation, int filmlength) : base(id, name, cover, status, estimation)
         {
             Comment = comment;
             Filmlength = filmlength;

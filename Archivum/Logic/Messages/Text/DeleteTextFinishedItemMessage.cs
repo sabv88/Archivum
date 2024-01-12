@@ -5,13 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Archivum.Logic
+namespace Archivum.Logic.Messages.Text
 {
-    public class AddTextItemMessage : ValueChangedMessage<IViewModel>
+    public class DeleteTextFinishedItemMessage : ValueChangedMessage<IViewModel>
     {
-        public AddTextItemMessage(IViewModel value) : base(value)
+        public DeleteTextFinishedItemMessage(IViewModel value) : base(value)
         {
-
         }
     }
 }

@@ -10,6 +10,6 @@ namespace Archivum.Interfaces
 {
     public interface IlistService
     {
-        Task<ObservableCollection<IViewModel>> GetNextItemsAsync<T, V>(string filter, int start) where T : IModel, new() where V : class, IViewModel;
+        Task<ObservableCollection<IViewModel>> GetNextItemsAsync<T, V>(string filter, int status, int start) where T : IModel, new() where V : class, IViewModel;
     }
 }

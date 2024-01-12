@@ -32,7 +32,7 @@ namespace Archivum.Logic
 
         public async Task<int> GetAnimeSeriesLengthSum()
         {
-            string query = "SELECT Sum(Serieslength) FROM [Anime]";
+            string query = "SELECT Sum(Serieslength * SeriesCount) FROM [Anime]";
             return await repository.ExecuteScalar<Anime>(query);
         }
 
@@ -65,7 +65,26 @@ namespace Archivum.Logic
             string query = $"SELECT Count(*) FROM [Anime] where Waifu<>'' ";
             return await repository.ExecuteScalar<Anime>(query);
         }
-
+        public async Task<int> GetAnimeWatchedCount()
+        {
+            string query = $"SELECT Count(*) FROM [Anime] where Status = 1";
+            return await repository.ExecuteScalar<Anime>(query);
+        }
+        public async Task<int> GetAnimeInProgressCount()
+        {
+            string query = $"SELECT Count(*) FROM [Anime] where Status = 0";
+            return await repository.ExecuteScalar<Anime>(query);
+        }
+        public async Task<int> GetAnimeDroppedCount()
+        {
+            string query = $"SELECT Count(*) FROM [Anime] where Status = 2";
+            return await repository.ExecuteScalar<Anime>(query);
+        }
+        public async Task<int> GetAnimeInPlanCount()
+        {
+            string query = $"SELECT Count(*) FROM [Anime] where Status = 3";
+            return await repository.ExecuteScalar<Anime>(query);
+        }
         #endregion
 
         #region film statictick
@@ -94,6 +113,26 @@ namespace Archivum.Logic
             return await repository.ExecuteScalar<Anime>(query);
         }
 
+        public async Task<int> GetFilmWatchedCount()
+        {
+            string query = $"SELECT Count(*) FROM [Film] where Status = 1";
+            return await repository.ExecuteScalar<Film>(query);
+        }
+        public async Task<int> GetFilmInProgressCount()
+        {
+            string query = $"SELECT Count(*) FROM [Film] where Status = 0";
+            return await repository.ExecuteScalar<Film>(query);
+        }
+        public async Task<int> GetFilmDroppedCount()
+        {
+            string query = $"SELECT Count(*) FROM [Film] where Status = 2";
+            return await repository.ExecuteScalar<Film>(query);
+        }
+        public async Task<int> GetFilmInPlanCount()
+        {
+            string query = $"SELECT Count(*) FROM [Film] where Status = 3";
+            return await repository.ExecuteScalar<Film>(query);
+        }
         #endregion
 
         #region series statictick
@@ -101,43 +140,63 @@ namespace Archivum.Logic
         public async Task<int> GetSeriesCountAsync()
         {
             string query = "select count(*) from Serial";
-            return await repository.ExecuteScalar<Anime>(query); ;
+            return await repository.ExecuteScalar<Serial>(query); ;
         }
 
         public async Task<int> GetSeriesSeriesCount()
         {
             string query = "SELECT Sum(SeriesCount) FROM [Serial]";
-            return await repository.ExecuteScalar<Anime>(query);
+            return await repository.ExecuteScalar<Serial>(query);
         }
 
         public async Task<int> GetSeriesSeriesLengthSum()
         {
-            string query = "SELECT Sum(Serieslength) FROM [Serial]";
-            return await repository.ExecuteScalar<Anime>(query);
+            string query = "SELECT Sum(Serieslength * SeriesCount) FROM [Serial]";
+            return await repository.ExecuteScalar<Serial>(query);
         }
 
         public async Task<int> GetSeriesMaxSeriesCount()
         {
             string query = "SELECT Max(SeriesCount) FROM [Serial]";
-            return await repository.ExecuteScalar<Anime>(query);
+            return await repository.ExecuteScalar<Serial>(query);
         }
 
         public async Task<int> GetSeriesMinSeriesCount()
         {
             string query = "SELECT Min(SeriesCount) FROM [Serial]";
-            return await repository.ExecuteScalar<Anime>(query);
+            return await repository.ExecuteScalar<Serial>(query);
         }
 
         public async Task<int> GetSeriesMaxSeriesLength()
         {
             string query = "SELECT Max(SeriesLength) FROM [Serial]";
-            return await repository.ExecuteScalar<Anime>(query);
+            return await repository.ExecuteScalar<Serial>(query);
         }
 
         public async Task<int> GetSeriesMinSeriesLength()
         {
             string query = "SELECT Min(SeriesLength) FROM [Serial]";
-            return await repository.ExecuteScalar<Anime>(query);
+            return await repository.ExecuteScalar<Serial>(query);
+        }
+        public async Task<int> GetSeriesWatchedCount()
+        {
+            string query = $"SELECT Count(*) FROM [Serial] where Status = 1";
+            return await repository.ExecuteScalar<Serial>(query);
+        }
+        public async Task<int> GetSeriesInProgressCount()
+        {
+            string query = $"SELECT Count(*) FROM [Serial] where Status = 0";
+            return await repository.ExecuteScalar<Serial>(query);
+        }
+        public async Task<int> GetSeriesDroppedCount()
+        {
+            string query = $"SELECT Count(*) FROM [Serial] where Status = 2";
+            return await repository.ExecuteScalar<Serial>(query);
+        }
+        public async Task<int> GetSeriesInPlanCount()
+        {
+            string query = $"SELECT Count(*) FROM [Serial] where Status = 3";
+            return await repository.ExecuteScalar<Serial>(query);
         }
         #endregion
     }

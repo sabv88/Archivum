@@ -5,13 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Archivum.Logic
+namespace Archivum.Logic.Messages.Games
 {
-    public class AddVideoItemMessage : ValueChangedMessage<IViewModel>
+    public class DeleteGamesInPlanItemMessage : ValueChangedMessage<IViewModel>
     {
-        public AddVideoItemMessage(IViewModel value) : base(value)
+        public DeleteGamesInPlanItemMessage(IViewModel value) : base(value)
         {
-
         }
     }
 }

@@ -12,7 +12,19 @@ namespace Archivum.ViewModels.Text
         string type;
         string comment;
         int pagesAmount;
-
+        string chaptersAmount;
+        public string СhaptersAmount
+        {
+            get => chaptersAmount;
+            set
+            {
+                if (chaptersAmount != value)
+                {
+                    chaptersAmount = value;
+                    OnPropertyChanged(nameof(СhaptersAmount));
+                }
+            }
+        }
         public AddViewModelText(IRepository repository) : base(repository)
         {
 
@@ -64,24 +76,23 @@ namespace Archivum.ViewModels.Text
 
             if (Type == "Манга")
             {                
-                var a = new Manga(0, name, cover, pagesAmount, comment);
+                var a = new Manga(0, name, cover, status, estimation, comment, chaptersAmount);
                 _ = await repository.SaveItemAsync(a, 0);
-                WeakReferenceMessenger.Default.Send(new AddTextItemMessage(new MangaViewModel(a, repository)));
+                 SendMessageAdd(status, new MangaViewModel(a, repository));
             }
 
             if (Type == "Книга")
             {
-                var a = new Book(0, Name, cover, pagesAmount, comment);
+                var a = new Book(0, Name, cover, status, estimation, pagesAmount, comment, chaptersAmount);
                 _ = await repository.SaveItemAsync(a, 0);
-                WeakReferenceMessenger.Default.Send(new AddTextItemMessage(new BookViewModel(a, repository)));
-
+                SendMessageAdd(status, new BookViewModel(a, repository));
             }
 
             if (Type == null)
             {
-                var a = new TextMaterial(0, Name, cover);
+                var a = new TextMaterial(0, Name, cover, status, estimation);
                 _ = await repository.SaveItemAsync(a, 0);
-                WeakReferenceMessenger.Default.Send(new AddTextItemMessage(new TextLibraryViewModel(a, repository)));
+                SendMessageAdd(status, new TextLibraryViewModel(a, repository));
             }
 
         });

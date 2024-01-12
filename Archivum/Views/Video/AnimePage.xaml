@@ -2,40 +2,74 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Archivum.Views.AnimePage"
-             xmlns:local="clr-namespace:Archivum.ViewModels"
+             xmlns:local="clr-namespace:Archivum.Logic"
              Title="{Binding Name}"
              Shell.TabBarIsVisible="False"
              >
- 
+    <ContentPage.Resources>
+        <local:StatusConverter x:Key="statusConverter" />
+        <local:ImageConverter x:Key="imageConverter" />
+        <local:EstimationConverter x:Key="estimationConverter" />
+    </ContentPage.Resources>
+    
     <ScrollView>
 
-        <StackLayout x:Name="hg" Margin="5" >
-            <Image Source="{Binding Cover}" Aspect = "AspectFill">
+        <StackLayout x:Name="hg" >
+            <Image Source="{Binding Cover, Converter={StaticResource imageConverter}}" Aspect = "AspectFill">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding AddImage}"/>
                 </Image.GestureRecognizers>
             </Image >
 
             <Frame Background="#4d5645">
-                <StackLayout Spacing="5">
-                    <Label HorizontalTextAlignment="Center" Text="Название" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
-                    <Entry HorizontalTextAlignment="Center" Text="{Binding Name, Mode=TwoWay}" />
+                <StackLayout>
+                    <Label FontFamily="anime"  HorizontalTextAlignment="Center" Text="Название" FontSize="Large" HorizontalOptions="Center"/>
+                    <Entry FontFamily="anime" HorizontalTextAlignment="Center" Text="{Binding Name, Mode=TwoWay}" />
                 </StackLayout>
             </Frame>
-
-            <Label Text="Аниме" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
-
+            <Frame BackgroundColor="#4D8963">
+                <StackLayout>
+                    <Label FontFamily="anime" Text="Аниме" FontSize="Large" HorizontalOptions="Center" />
+                </StackLayout>
+            </Frame>
+            <Frame BackgroundColor="#0E5C2B">
+                <StackLayout Spacing="5">
+                    <Label FontFamily="anime" HorizontalTextAlignment="Center" Text="Статус" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
+                    <Picker FontFamily="anime" HorizontalTextAlignment="Center" SelectedItem="{Binding Status, Mode=TwoWay, Converter={StaticResource statusConverter}}">
+                        <Picker.Items>
+                            <x:String>Завершенно</x:String>
+                            <x:String>В процессе</x:String>
+                            <x:String>Брошено</x:String>
+                            <x:String>В планах</x:String>
+                        </Picker.Items>
+                    </Picker>
+                </StackLayout>
+            </Frame>
+            <Frame BackgroundColor="#4AC076">
+                <StackLayout Spacing="5">
+                    <Label FontFamily="anime" HorizontalTextAlignment="Center" Text="Оценка" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
+                    <Picker FontFamily="anime" HorizontalTextAlignment="Center" SelectedItem="{Binding Estimation, Mode=TwoWay, Converter={StaticResource estimationConverter}}" >
+                        <Picker.Items>
+                            <x:String>Легенда</x:String>
+                            <x:String>Super good</x:String>
+                            <x:String>It's okay</x:String>
+                            <x:String>Не очень</x:String>
+                            <x:String>Говно</x:String>
+                        </Picker.Items>
+                    </Picker>
+                </StackLayout>
+            </Frame>
             <Frame Background="#4d5d53">
                 <StackLayout Spacing="5">
-                    <Label HorizontalTextAlignment="Center" Text="Количество серий" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
-                    <Entry HorizontalTextAlignment="Center" Text="{Binding SeriesCount, Mode=TwoWay}" />
+                    <Label FontFamily="anime" HorizontalTextAlignment="Center" Text="Количество серий" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
+                    <Entry FontFamily="anime" HorizontalTextAlignment="Center" Text="{Binding SeriesCount, Mode=TwoWay}" />
                 </StackLayout>
             </Frame>
 
             <Frame Background="#424632">
                 <StackLayout Spacing="5">
-                    <Label HorizontalTextAlignment="Center" Text="Длинна серии" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
-                    <Entry HorizontalTextAlignment="Center" Text="{Binding SeriesLength, Mode=TwoWay}" />
+                    <Label FontFamily="anime" HorizontalTextAlignment="Center" Text="Длинна серии (в минутах)" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
+                    <Entry FontFamily="anime" HorizontalTextAlignment="Center" Text="{Binding SeriesLength, Mode=TwoWay}" />
                 </StackLayout>
             </Frame>
 
@@ -43,16 +77,16 @@
                 <StackLayout Spacing="5">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
                         <Image Source="waifu_50px" HorizontalOptions="Center"/>
-                        <Label HorizontalTextAlignment="Center" Text="Топ вайфу" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
+                        <Label FontFamily="anime" HorizontalTextAlignment="Center" Text="Топ вайфу" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
                     </StackLayout>
-                    <Entry HorizontalTextAlignment="Center" Text="{Binding Waifu, Mode=TwoWay}" />
+                    <Entry FontFamily="anime" HorizontalTextAlignment="Center" Text="{Binding Waifu, Mode=TwoWay}" />
                 </StackLayout>
             </Frame>
 
             <Frame Background="#303830">
                 <StackLayout Spacing="5">
-                    <Label HorizontalTextAlignment="Center" Text="Комментарий" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
-                    <Entry HorizontalTextAlignment="Center" Text="{Binding Comment, Mode=TwoWay}" />
+                    <Label FontFamily="anime" HorizontalTextAlignment="Center" Text="Комментарий" FontSize="Large" HorizontalOptions="Center" Margin="10"/>
+                    <Entry FontFamily="anime" HorizontalTextAlignment="Center" Text="{Binding Comment, Mode=TwoWay}" />
                 </StackLayout>
             </Frame>
             

@@ -12,10 +12,10 @@ namespace Archivum.Logic
             this.repository = repository;
         }
 
-        public async Task<ObservableCollection<IViewModel>> GetNextItemsAsync<T, V>(string filter, int start) where T : IModel, new() where V : class, IViewModel
+        public async Task<ObservableCollection<IViewModel>> GetNextItemsAsync<T, V>(string filter, int status, int start) where T : IModel, new() where V : class, IViewModel
         {
             ObservableCollection<IViewModel> Collection = new();
-            string query = "SELECT * FROM [" + filter + "] ORDER BY Name LIMIT " + start + ", " + 10;
+            string query = "SELECT * FROM [" + filter + "] where Status = "+ status + " ORDER BY Name LIMIT " + start + ", " + 10;
             var list = await repository.SelectModels<T>(query);
             MainThread.BeginInvokeOnMainThread(() =>
             {

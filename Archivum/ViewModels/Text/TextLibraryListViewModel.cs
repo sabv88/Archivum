@@ -7,9 +7,8 @@ using System.Windows.Input;
 
 namespace Archivum.ViewModels.Text;
 
-public class TextLibraryListViewModel : BaseListViewModel, IRecipient<DeleteTextItemMessage>, IRecipient<AddTextItemMessage>
+public class TextLibraryListViewModel : BaseListViewModel
 {
-
     public ICommand Statistick => new Command(async () =>
     {
         await Shell.Current.GoToAsync($"textStatictickPage");
@@ -27,7 +26,6 @@ public class TextLibraryListViewModel : BaseListViewModel, IRecipient<DeleteText
     {
         TapItem = new AsyncRelayCommand<IViewModel>(TapItemAsync);
         NextItems = new AsyncRelayCommand(GetNextItemsAsync);
-        WeakReferenceMessenger.Default.RegisterAll(this);
     }
 
 
@@ -36,9 +34,9 @@ public class TextLibraryListViewModel : BaseListViewModel, IRecipient<DeleteText
     {
         if (filter == "Все")
         {
-            var bookCollection = await listService.GetNextItemsAsync<Book, BookViewModel>("Book", start);
-            var mangaCollection = await listService.GetNextItemsAsync<Manga, MangaViewModel>("Manga", start);
-            var otherCollectoin = await listService.GetNextItemsAsync<TextMaterial, TextLibraryViewModel>("TextMaterial", start);
+            var bookCollection = await listService.GetNextItemsAsync<Book, BookViewModel>("Book", 1, start);
+            var mangaCollection = await listService.GetNextItemsAsync<Manga, MangaViewModel>("Manga", 1, start);
+            var otherCollectoin = await listService.GetNextItemsAsync<TextMaterial, TextLibraryViewModel>("TextMaterial", 1, start);
 
             foreach (var item in bookCollection)
             {
@@ -57,7 +55,7 @@ public class TextLibraryListViewModel : BaseListViewModel, IRecipient<DeleteText
         {
             if (filter == "Манга")
             {
-                var mangaCollection = await listService.GetNextItemsAsync<Manga, MangaViewModel>("Manga", start);
+                var mangaCollection = await listService.GetNextItemsAsync<Manga, MangaViewModel>("Manga", 1, start);
 
                 foreach (var item in mangaCollection)
                 {
@@ -68,7 +66,7 @@ public class TextLibraryListViewModel : BaseListViewModel, IRecipient<DeleteText
 
             if (filter == "Книга")
             {
-                var bookCollection = await listService.GetNextItemsAsync<Book, BookViewModel>("Book", start);
+                var bookCollection = await listService.GetNextItemsAsync<Book, BookViewModel>("Book", 1, start);
 
                 foreach (var item in bookCollection)
                 {
@@ -106,20 +104,5 @@ public class TextLibraryListViewModel : BaseListViewModel, IRecipient<DeleteText
         });
     }
 
-    public void Receive(DeleteTextItemMessage message)
-    {
-        MainThread.BeginInvokeOnMainThread(() =>
-        {
-            IViewModel matchedNote = Collection.FirstOrDefault((n) => n.ID == message.Value.ID && n.GetType() == message.Value.GetType());
-            Collection.Remove(matchedNote);
-            OnPropertyChanged("Collection");
-
-        });
-    }
-
-    public void Receive(AddTextItemMessage message)
-    {
-        Collection.Add(message.Value);
-        OnPropertyChanged("Collection");
-    }
+  
 }

@@ -3,11 +3,95 @@
     x:Class="Archivum.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:views="clr-namespace:Archivum.Views">
+    xmlns:views="clr-namespace:Archivum.Views"
+    xmlns:viewsVideo="clr-namespace:Archivum.Views.Video"
+    xmlns:viewsText="clr-namespace:Archivum.Views.Text"
+    xmlns:viewsGames="clr-namespace:Archivum.Views.Games"
+    >
+    <Shell.FlyoutHeaderTemplate>
+        <DataTemplate>
+            <Grid BackgroundColor="#512BD4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="10"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                </Grid.RowDefinitions>
+                <Label
+              Grid.Column="1"
+              Grid.Row="2"
+              Text="Archivum"
+              FontSize="48"
+              TextColor="Black"
+              FontFamily="Gothirus"/>
+            </Grid>
+        </DataTemplate>
+    </Shell.FlyoutHeaderTemplate>
+
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid  Margin="10" ColumnDefinitions="0.2*,0.8*">
+                <Image Source="{Binding FlyoutIcon}"
+                       Margin="5"
+                       />
+                <Label Grid.Column="1"
+                       Text="{Binding Title}"
+                       VerticalTextAlignment="Center" 
+                       FontSize="30"
+                       FontFamily="Gothirus"/>
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
     
-    <TabBar>
-        <ShellContent Icon="visual_game_boy.svg" Title="Игрушки" ContentTemplate="{DataTemplate views:GamesLibraryListPage}" />
-        <ShellContent Icon="youtube.svg" Title="Зырило" ContentTemplate="{DataTemplate views:VideoLibraryListPage}" />
-        <ShellContent Icon="bookmark.svg" Title="Чтиво" ContentTemplate="{DataTemplate views:TextLibraryListPage}" />
-    </TabBar>
+    <FlyoutItem Title="Игротека" Icon="visual_game_boy.svg">
+        <Tab Title="Пройдено" Icon="finished_game.svg">
+            <ShellContent Title="Пройдено"  ContentTemplate="{DataTemplate views:GamesLibraryListPage}" />
+        </Tab>
+        <Tab Title="В процессе" Icon="in_process_game.svg">
+            <ShellContent Title="В процессе"  ContentTemplate="{DataTemplate viewsGames:InProgressGamesListPage}" />
+        </Tab>
+        <Tab Title="Брошено" Icon="dropped_games.svg">
+            <ShellContent Title="Брошено" ContentTemplate="{DataTemplate viewsGames:DroppedGamesListPage}" />
+        </Tab>
+        <Tab Title="В планах" Icon="in_plan_games.svg">
+            <ShellContent Title="В планах"  ContentTemplate="{DataTemplate viewsGames:InPlanGamesListPage}" />
+        </Tab>
+    </FlyoutItem>
+
+    <FlyoutItem Title="Видеотека"
+                Icon="youtube.svg">
+        <Tab Title="Просмотренно" Icon="finished_video.svg">
+            <ShellContent ContentTemplate="{DataTemplate views:VideoLibraryListPage}" />
+        </Tab>
+        <Tab Title="В процессе" Icon="in_process_video.svg">
+            <ShellContent ContentTemplate="{DataTemplate viewsVideo:InProgressVideoListPage}" />
+        </Tab>
+        <Tab Title="Брошено" Icon="dropped_video.svg">
+            <ShellContent ContentTemplate="{DataTemplate viewsVideo:DroppedVideoListPage}" />
+        </Tab>
+        <Tab Title="В планах" Icon="in_plan_video.svg">
+            <ShellContent Title="В планах" ContentTemplate="{DataTemplate viewsVideo:InPlanVideoListPage}" />
+        </Tab>
+    </FlyoutItem>
+
+    <FlyoutItem Title="Чтиво"
+                Icon="bookmark.svg">
+        <Tab Title="Прочитанно" Icon="finished_text.svg">
+            <ShellContent Title="Прочитанно" ContentTemplate="{DataTemplate views:TextLibraryListPage}" />
+        </Tab>
+        <Tab Title="В процессе" Icon="in_process_text.svg">
+            <ShellContent Title="В процессе" ContentTemplate="{DataTemplate viewsText:InProgressTextLibraryListPage}" />
+        </Tab>
+        <Tab Title="Брошено" Icon="dropped_text.svg">
+            <ShellContent Title="Брошено" ContentTemplate="{DataTemplate viewsText:DroppedTextLibraryListPage}" />
+        </Tab>
+        <Tab Title="В планах" Icon="in_plan_text.svg">
+            <ShellContent Title="В планах" ContentTemplate="{DataTemplate viewsText:InPlanTextLibraryListPage}" />
+        </Tab>
+    </FlyoutItem>
 </Shell>

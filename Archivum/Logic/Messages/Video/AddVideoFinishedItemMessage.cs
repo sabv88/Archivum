@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace Archivum.Logic
 {
-    public class DeleteVideoItemMessage : ValueChangedMessage<IViewModel>
+    public class AddVideoFinishedItemMessage : ValueChangedMessage<IViewModel>
     {
-        public DeleteVideoItemMessage(IViewModel value) : base(value)
+        public AddVideoFinishedItemMessage(IViewModel value) : base(value)
         {
+
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Archivum.Interfaces;
 using Archivum.Logic;
+using Archivum.Logic.Messages.Games;
 using Archivum.Models;
 using CommunityToolkit.Mvvm.Messaging;
 using System;
@@ -36,9 +37,31 @@ namespace Archivum.ViewModels.Games
         {
             if (Type == null)
             {
-                var a = new GamesMaterial(0, Name, cover);
+                var a = new GamesMaterial(0, Name, cover, status, estimation);
                 _ = await repository.SaveItemAsync(a, 0);
-                WeakReferenceMessenger.Default.Send(new AddGamesItemMessage(new GameViewModel(a, repository)));
+                switch (status)
+                {
+                    case 0:
+                        {
+                            WeakReferenceMessenger.Default.Send(new AddGamesInProgressItemMessage(new GameViewModel(a, repository)));
+                            break;
+                        }
+                    case 1:
+                        {
+                            WeakReferenceMessenger.Default.Send(new AddGamesFinishedItemMessage(new GameViewModel(a, repository)));
+                            break;
+                        }
+                    case 2:
+                        {
+                            WeakReferenceMessenger.Default.Send(new AddGamesDroppedItemMessage(new GameViewModel(a, repository)));
+                            break;
+                        }
+                    case 3:
+                        {
+                            WeakReferenceMessenger.Default.Send(new AddGamesInPlanItemMessage(new GameViewModel(a, repository)));
+                            break;
+                        }
+                }
             }
 
         });

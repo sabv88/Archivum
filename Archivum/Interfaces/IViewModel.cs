@@ -9,9 +9,12 @@ namespace Archivum.Logic
 {
     public interface IViewModel
     {
-        int ID { get; }
-        string Name { get; }
+        int ID { get; set;}
+        string Name { get; set;}
         byte[] cover { get; }
+        int Status { get; set;}
+        int Estimation { get; set;}
+
         public ICommand SaveItem => new Command<object>(
                 execute: (object obj) =>
                 {

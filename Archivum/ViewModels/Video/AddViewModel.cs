@@ -1,7 +1,7 @@
 ﻿using Archivum.Interfaces;
 using Archivum.Logic;
-using Archivum.Models;
 using Archivum.Models.Video;
+using Archivum.ViewModels.Text;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Windows.Input;
 
@@ -78,6 +78,8 @@ namespace Archivum.ViewModels.Video
             }
         }
 
+      
+
         public string Comment
         {
             get => comment;
@@ -133,30 +135,31 @@ namespace Archivum.ViewModels.Video
 
             if (Type == "Аниме")
             {
-                var a = new Anime(0, Name, Comment, cover, Waifu, SeriesCount, SeriesLength);
+                var a = new Anime(0, Name, Comment, status, estimation, cover, Waifu, SeriesCount, SeriesLength);
                 _ = await repository.SaveItemAsync(a, 0);
-                WeakReferenceMessenger.Default.Send(new AddVideoItemMessage(new AnimeViewModel(a, repository)));
+                SendMessageAdd(status, new AnimeViewModel(a, repository));
+
             }
 
             if (Type == "Сериал")
             {
-                var a = new Serial(0, Name, Comment, cover, SeriesCount, SeriesLength);
+                var a = new Serial(0, Name, Comment, cover, status, estimation, SeriesCount, SeriesLength);
                 _ = await repository.SaveItemAsync(a, 0);
-                WeakReferenceMessenger.Default.Send(new AddVideoItemMessage(new SerialViewModel(a, repository)));
+                SendMessageAdd(status, new SerialViewModel(a, repository));
             }
 
             if (Type == "Фильм")
             {
-                var a = new Film(0, Name, Comment, cover, SeriesLength);
+                var a = new Film(0, Name, Comment, cover, status, estimation, SeriesLength);
                 _ = await repository.SaveItemAsync(a, 0);
-                WeakReferenceMessenger.Default.Send(new AddVideoItemMessage(new FilmViewModel(a, repository)));
+                SendMessageAdd(status, new FilmViewModel(a, repository));
             }
 
             if (Type == null)
             {
-                var a = new VideoMaterial(0, Name, cover);
+                var a = new VideoMaterial(0, Name, cover, status, estimation);
                 _ = await repository.SaveItemAsync(a, 0);
-                WeakReferenceMessenger.Default.Send(new AddVideoItemMessage(this));
+                SendMessageAdd(status, new VideoLibraryViewModel(a, repository));
             }
 
         });

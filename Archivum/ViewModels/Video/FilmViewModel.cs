@@ -45,23 +45,22 @@ namespace Archivum.ViewModels.Video
         public new ICommand SaveItem => new Command(async () =>
         {
             Repository repository = new Repository();
-            _ = repository.SaveItemAsync(new Film(ID, Name, comment, cover, Filmlength), ID);
+            _ = repository.SaveItemAsync(new Film(ID, Name, comment, cover, status, estimation, Filmlength), ID);
         });
 
         public new ICommand DeleteItem => new Command(
         execute: async () =>
         {
-            _ = repository.DeleteItemAsync(new Film(ID, Name, comment, cover, Filmlength));
-            WeakReferenceMessenger.Default.Send(new DeleteVideoItemMessage(this));
+            _ = repository.DeleteItemAsync(new Film(ID, Name, comment, cover, status, estimation, Filmlength));
+            SendMessageDelete(status, this);
             await Shell.Current.GoToAsync($"..");
         });
 
         public FilmViewModel(IRepository repository) : base(repository) { }
-        public FilmViewModel(int ID, string Name, byte[] cover, IRepository repository, int filmlength, string comment) : base(ID, Name, cover, repository)
+        public FilmViewModel(int ID, string Name, byte[] cover, int status, int estimation, IRepository repository, int filmlength, string comment) : base(ID, cover, Name, status, estimation, repository)
         {
             Filmlength = filmlength;
             Comment = comment;
-
         }
 
         public FilmViewModel(Film film, IRepository repository) : base(repository)

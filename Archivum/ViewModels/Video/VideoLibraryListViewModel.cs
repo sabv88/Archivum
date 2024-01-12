@@ -8,8 +8,8 @@ using Archivum.Models.Video;
 
 namespace Archivum.ViewModels.Video;
 
-public class VideoLibraryListViewModel : BaseListViewModel, IRecipient<DeleteVideoItemMessage>, IRecipient<AddVideoItemMessage>
-{   
+public class VideoLibraryListViewModel : BaseListViewModel
+{
     public ICommand Statistick => new Command(async () =>
     {
         await Shell.Current.GoToAsync($"videoStatictickPage");
@@ -21,23 +21,23 @@ public class VideoLibraryListViewModel : BaseListViewModel, IRecipient<DeleteVid
             ["AddViewModel"] = new AddViewModel(repository)
         });
     });
+
     public ICommand NextItems { get; }
 
     public VideoLibraryListViewModel(IRepository repository, IlistService listService) : base(repository, listService)
     {
         TapItem = new AsyncRelayCommand<IViewModel>(TapItemAsync);
         NextItems = new AsyncRelayCommand(GetNextItemsAsync);
-        WeakReferenceMessenger.Default.RegisterAll(this);
     }
 
     public override async Task GetNextItemsAsync()
     {
         if (Filter == "Все")
         {
-            var animeCollection = await listService.GetNextItemsAsync<Anime, AnimeViewModel>("Anime", start);
-            var filmCollection = await listService.GetNextItemsAsync<Film, FilmViewModel>("Film", start);
-            var serialCollectoin = await listService.GetNextItemsAsync<Serial, SerialViewModel>("Serial", start);
-            var otherCollectoin = await listService.GetNextItemsAsync<VideoMaterial, VideoLibraryViewModel>("VideoMaterial", start);
+            var animeCollection = await listService.GetNextItemsAsync<Anime, AnimeViewModel>("Anime", 1, start);
+            var filmCollection = await listService.GetNextItemsAsync<Film, FilmViewModel>("Film", 1, start);
+            var serialCollectoin = await listService.GetNextItemsAsync<Serial, SerialViewModel>("Serial", 1, start);
+            var otherCollectoin = await listService.GetNextItemsAsync<VideoMaterial, VideoLibraryViewModel>("VideoMaterial", 1, start);
 
             foreach (var item in animeCollection)
             {
@@ -63,7 +63,7 @@ public class VideoLibraryListViewModel : BaseListViewModel, IRecipient<DeleteVid
         {
             if (this.filter == "Аниме")
             {
-                var animeCollection = await listService.GetNextItemsAsync<Anime, AnimeViewModel>("Anime", start);
+                var animeCollection = await listService.GetNextItemsAsync<Anime, AnimeViewModel>("Anime", 1, start);
                 foreach (var item in animeCollection)
                 {
                     Collection.Add(item);
@@ -72,7 +72,7 @@ public class VideoLibraryListViewModel : BaseListViewModel, IRecipient<DeleteVid
 
             if (this.filter == "Фильм")
             {
-                var filmCollection = await listService.GetNextItemsAsync<Film, FilmViewModel>("Film", start);
+                var filmCollection = await listService.GetNextItemsAsync<Film, FilmViewModel>("Film", 1, start);
                 foreach (var item in filmCollection)
                 {
                     Collection.Add(item);
@@ -81,7 +81,7 @@ public class VideoLibraryListViewModel : BaseListViewModel, IRecipient<DeleteVid
 
             if (this.filter == "Сериал")
             {
-                var serialCollectoin = await listService.GetNextItemsAsync<Serial, SerialViewModel>("Serial", start);
+                var serialCollectoin = await listService.GetNextItemsAsync<Serial, SerialViewModel>("Serial", 1, start);
                 foreach (var item in serialCollectoin)
                 {
                     Collection.Add(item);
@@ -121,22 +121,6 @@ public class VideoLibraryListViewModel : BaseListViewModel, IRecipient<DeleteVid
         {
             ["ViewModel"] = videoMaterial
         });
-    }
-
-    public void Receive(DeleteVideoItemMessage message)
-    {
-        MainThread.BeginInvokeOnMainThread(() =>
-        {
-            IViewModel matchedNote = Collection.FirstOrDefault((n) => n.ID == message.Value.ID && n.GetType() == message.Value.GetType());
-            Collection.Remove(matchedNote);
-            OnPropertyChanged("Collection");
-        });
-    }
-
-    public void Receive(AddVideoItemMessage message)
-    {
-        Collection.Add(message.Value);
-        OnPropertyChanged("Collection");
     }
 }
 

@@ -1,6 +1,7 @@
 ﻿using Archivum.ViewModels;
 using Archivum.Views;
 using Archivum.Views.Games;
+using Archivum.Views.Video;
 
 namespace Archivum;
 
@@ -19,6 +20,7 @@ public partial class AppShell : Shell
         Routes.Add("videolibraryPage", typeof(VideoLibraryPage));
         Routes.Add("videolibraryListPage", typeof(VideoLibraryListPage));
         Routes.Add("gameslibraryListPage", typeof(GamesLibraryListPage));
+        Routes.Add("droppedVideoListPage", typeof(DroppedVideoListPage));
         Routes.Add("textlibraryListPage", typeof(TextLibraryListPage));
         Routes.Add("textlibraryPage", typeof(TextLibraryPage));
         Routes.Add("gamesLibraryPage", typeof(GamePage));

@@ -10,7 +10,7 @@ public class Serial : VideoMaterial
     public int Serieslength { get; set; }
 
     public Serial() { }
-    public Serial(int id, string name, string comment, byte[] cover, int seriesCount, int serieslength) : base(id, name, cover)
+    public Serial(int id, string name, string comment, byte[] cover, int status, int estimation, int seriesCount, int serieslength) : base(id, name, cover, status, estimation)
     {
         Comment = comment;
         SeriesCount = seriesCount;

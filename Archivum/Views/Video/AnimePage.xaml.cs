@@ -4,9 +4,8 @@ namespace Archivum.Views;
 
 public partial class AnimePage : ContentPage, IQueryAttributable
 {
-    public AnimePage(IViewModel viewModel)
+    public AnimePage()
     {
-        BindingContext = viewModel;
         InitializeComponent();
     }
 

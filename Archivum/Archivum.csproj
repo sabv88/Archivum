@@ -52,10 +52,31 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Fonts\anime.ttf" />
+	  <None Remove="Resources\Fonts\book.ttf" />
+	  <None Remove="Resources\Fonts\Cloister Black Light.ttf" />
+	  <None Remove="Resources\Fonts\film.ttf" />
+	  <None Remove="Resources\Fonts\FundamentalBrigadeSchwer.ttf" />
+	  <None Remove="Resources\Fonts\games.ttf" />
+	  <None Remove="Resources\Fonts\Gothirus.ttf" />
+	  <None Remove="Resources\Fonts\manga.ttf" />
+	  <None Remove="Resources\Fonts\MastodonBold.ttf" />
+	  <None Remove="Resources\Fonts\serial.ttf" />
 	  <None Remove="Resources\Images\berserk_48px.svg" />
 	  <None Remove="Resources\Images\book_50px1.svg" />
 	  <None Remove="Resources\Images\breaking_bad.svg" />
 	  <None Remove="Resources\Images\coderwall1.svg" />
+	  <None Remove="Resources\Images\dropped_games.svg" />
+	  <None Remove="Resources\Images\dropped_text.svg" />
+	  <None Remove="Resources\Images\dropped_video.svg" />
+	  <None Remove="Resources\Images\finished_text.svg" />
+	  <None Remove="Resources\Images\finished_video.svg" />
+	  <None Remove="Resources\Images\in_plan_games.svg" />
+	  <None Remove="Resources\Images\in_plan_text.svg" />
+	  <None Remove="Resources\Images\in_plan_video.svg" />
+	  <None Remove="Resources\Images\in_process_game.svg" />
+	  <None Remove="Resources\Images\in_process_text.svg" />
+	  <None Remove="Resources\Images\in_process_video.svg" />
 	  <None Remove="Resources\Images\picture1.svg" />
 	  <None Remove="Resources\Images\popcorn_time.svg" />
 	  <None Remove="Resources\Images\waifu_50px.svg" />
@@ -65,10 +86,28 @@
 	  <MauiXaml Update="Views\Games\AddPageGames.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Games\DroppedGamesListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Games\GamePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Games\GamesStatistick.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Games\InPlanGamesListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Games\InProgressGamesListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Text\DroppedTextLibraryListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Text\InPlanTextLibraryListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Text\InProgressTextLibraryListPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Video\AddPage.xaml">
@@ -83,6 +122,9 @@
 	  <MauiXaml Update="Views\Text\BookPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Video\DroppedVideoListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Video\FilmPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -90,6 +132,12 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Text\MangaPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Video\InPlanVideoListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Video\InProgressVideoListPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Video\SerialPage.xaml">
@@ -120,11 +168,15 @@
 	  <PackageReference Include="CommunityToolkit.Maui.Core" Version="5.3.0" />
 	  <PackageReference Include="CommunityToolkit.Maui.Markup" Version="3.2.0" />
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+	  <PackageReference Include="Microcharts.Maui" Version="1.0.0" />
 	  <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
 	  <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.6" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\Games\InProgressGamesListPage.xaml.cs">
+	    <DependentUpon>InProgressGamesListPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\Text\TextLibraryPage.xaml.cs">
 	    <DependentUpon>TextLibraryPage.xaml</DependentUpon>
 	  </Compile>

@@ -2,8 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Archivum.Views.VideoLibraryListPage"
-             xmlns:local="clr-namespace:Archivum"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:local="clr-namespace:Archivum.Logic"
+>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Добавить" Order="Secondary" Command="{Binding AddItem}"/>
@@ -11,7 +12,7 @@
     </ContentPage.ToolbarItems>
     
     <Shell.TitleView >
-        <Picker SelectedItem="{Binding Filter}">
+        <Picker HorizontalTextAlignment="Center" SelectedItem="{Binding Filter}">
             <Picker.Items>
                 <x:String>Все</x:String>
                 <x:String>Аниме</x:String>
@@ -21,27 +22,30 @@
         </Picker>
     </Shell.TitleView>
 
-
     <StackLayout>
-     
+
         <CollectionView
                     ItemsSource="{Binding Collection}"
                     SelectionMode="Single"
                     SelectedItem="{Binding SelectedVM, Mode=TwoWay}"
-                    RemainingItemsThreshold ="1" RemainingItemsThresholdReachedCommand="{Binding NextItems}"
+                    RemainingItemsThreshold ="5" RemainingItemsThresholdReachedCommand="{Binding NextItems}"
                 VerticalOptions="FillAndExpand">
             <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
-            </CollectionView.ItemsLayout>   
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="0" />
+            </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
-                    <DataTemplate>
+                <DataTemplate>
+                    <Border Stroke="#C49B33"
+                    StrokeThickness="4"
+                    HorizontalOptions="FillAndExpand">
+                       
                         <StackLayout>
-                        <Image Source="{Binding Cover}" Aspect = "AspectFit"/>
-                            <Label Text="{Binding Name}" FontSize="Large" HorizontalOptions="Center" />
+                            <Label HorizontalTextAlignment="Center" Text="{Binding Name}" FontSize="Large" HorizontalOptions="Center" />
                         </StackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                    </Border>
+                    
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </StackLayout>
-     
 </ContentPage>

@@ -2,12 +2,13 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Archivum.Views.Games.GamesStatistick"
-             Title="GamesStatistick">
+             xmlns:microcharts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
+             >
     <ScrollView >
         <StackLayout>
 
 
-            <Label Text="Книги" FontSize="Large" Grid.ColumnSpan="2" Grid.Row="0" HorizontalOptions="Center" LineBreakMode="WordWrap" Margin="10"/>
+            <Label Text="Игрушки" FontSize="Large" Grid.ColumnSpan="2" Grid.Row="0" HorizontalOptions="Center" LineBreakMode="WordWrap" Margin="10"/>
 
             <Frame BackgroundColor="#1a162a">
                 <StackLayout>
@@ -15,7 +16,13 @@
                     <Label Text="{Binding GamesCount}" FontSize="Small" Grid.Column="1" Grid.Row="1" HorizontalOptions="Center"/>
                 </StackLayout>
             </Frame>
-
+            
+            <Frame Background="Black" Margin="0">
+                <StackLayout>
+                    <microcharts:ChartView Chart="{Binding GamesStatusChart}" HeightRequest="250"/>
+                </StackLayout>
+            </Frame>
+            
         </StackLayout>
     </ScrollView>
 </ContentPage>

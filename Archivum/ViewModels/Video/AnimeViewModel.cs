@@ -48,9 +48,7 @@ namespace Archivum.ViewModels.Video
                 {
                     seriesLength = value;
                     OnPropertyChanged(nameof(SeriesLength));
-
                 }
-
             }
         }
 
@@ -69,19 +67,19 @@ namespace Archivum.ViewModels.Video
 
         public new ICommand SaveItem => new Command(async () =>
             {
-                _ = repository.SaveItemAsync(new Anime(ID, Name, Comment, cover, Waifu, SeriesCount, SeriesLength), ID);
+                _ = repository.SaveItemAsync(new Anime(ID, Name, Comment, status, estimation, cover, Waifu, SeriesCount, SeriesLength), ID);
             });
 
          public ICommand deleteItem => new Command(
             execute: async () =>
            {
-               _ = repository.DeleteItemAsync(new Anime(ID, Name, Comment, cover, Waifu, SeriesCount, SeriesLength));
-               WeakReferenceMessenger.Default.Send(new DeleteVideoItemMessage(this));
+               _ = repository.DeleteItemAsync(new Anime(ID, Name, Comment, status, estimation, cover, Waifu, SeriesCount, SeriesLength));
+               SendMessageDelete(status, this);
                await Shell.Current.GoToAsync($"..");
            });
 
         public AnimeViewModel(IRepository repository) : base(repository) { }
-        public AnimeViewModel(int ID, string Name, byte[] cover, IRepository repository, string Comment, int SeriesCount, int SeriesLength, string Waifu) : base(ID, Name, cover, repository)
+        public AnimeViewModel(int ID, byte[] cover, string Name, int status, int estimation, IRepository repository, string Comment, int SeriesCount, int SeriesLength, string Waifu) : base(ID, cover, Name, status, estimation, repository)
         {
             this.Comment = Comment;
             this.SeriesCount = SeriesCount;
@@ -94,6 +92,8 @@ namespace Archivum.ViewModels.Video
             ID = anime.ID;
             Name = anime.Name;
             cover = anime.Cover;
+            Status = anime.Status;
+            Estimation = anime.Estimation;
             SeriesCount = anime.SeriesCount;
             SeriesLength = anime.Serieslength;
             Waifu = anime.Waifu;

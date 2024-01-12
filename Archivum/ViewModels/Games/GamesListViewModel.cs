@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace Archivum.ViewModels.Games
 {
-    public class GamesListViewModel : BaseListViewModel, IRecipient<DeleteGamesItemMessage>, IRecipient<AddGamesItemMessage>
+    public class GamesListViewModel : BaseListViewModel
     {
         public ICommand Statistick => new Command(async () =>
         {
@@ -21,19 +21,18 @@ namespace Archivum.ViewModels.Games
                 ["AddViewModelGames"] = new AddGamesViewModel(repository)
             });
         });
+
         public ICommand NextItems { get; }
 
         public GamesListViewModel(IRepository repository, IlistService listService) : base(repository, listService)
         {
             TapItem = new AsyncRelayCommand<IViewModel>(TapItemAsync);
             NextItems = new AsyncRelayCommand(GetNextItemsAsync);
-            WeakReferenceMessenger.Default.RegisterAll(this);
-            _ = GetNextItemsAsync();
         }
 
         public override async Task GetNextItemsAsync()
         {
-            var gamesCollection = await listService.GetNextItemsAsync<GamesMaterial, GameViewModel>("GamesMaterial", start);
+            var gamesCollection = await listService.GetNextItemsAsync<GamesMaterial, GameViewModel>("GamesMaterial", 1, start);
 
             foreach (var item in gamesCollection)
             {
@@ -47,26 +46,10 @@ namespace Archivum.ViewModels.Games
 
         public override Task TapItemAsync(IViewModel gamesMaterial)
         {
-            return Shell.Current.GoToAsync($"gameslibraryPage", true, new Dictionary<string, object>
+            return Shell.Current.GoToAsync($"gamesLibraryPage", true, new Dictionary<string, object>
             {
                 ["ViewModel"] = gamesMaterial
             });
-        }
-
-        public void Receive(DeleteGamesItemMessage message)
-        {
-            MainThread.BeginInvokeOnMainThread(() =>
-            {
-                IViewModel matchedNote = Collection.FirstOrDefault((n) => n.ID == message.Value.ID && n.GetType() == message.Value.GetType());
-                Collection.Remove(matchedNote);
-                OnPropertyChanged("Collection");
-            });
-        }
-
-        public void Receive(AddGamesItemMessage message)
-        {
-            Collection.Add(message.Value);
-            OnPropertyChanged("Collection");
         }
     }
 }

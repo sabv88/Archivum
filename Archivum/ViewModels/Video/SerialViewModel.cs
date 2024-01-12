@@ -54,18 +54,18 @@ namespace Archivum.ViewModels.Video
         public new ICommand SaveItem => new Command(async () =>
         {
             Repository repository = new Repository();
-            _ = repository.SaveItemAsync(new Serial(ID, Name, comment, cover, seriesCount, seriesLength), ID);
+            _ = repository.SaveItemAsync(new Serial(ID, Name, comment, cover, status, estimation, seriesCount, seriesLength), ID);
         });
 
         public new ICommand DeleteItem => new Command(
        execute: async () =>
        {
-           _ = repository.DeleteItemAsync(new Serial(ID, Name, comment, cover, seriesCount, seriesLength));
-           WeakReferenceMessenger.Default.Send(new DeleteVideoItemMessage(this));
+           _ = repository.DeleteItemAsync(new Serial(ID, Name, comment, cover, status, estimation, seriesCount, seriesLength));
+           SendMessageDelete(status, this);
            await Shell.Current.GoToAsync($"..");
        });
 
-        public SerialViewModel(int ID, string Name, byte[] cover, IRepository repository, string Comment, int SeriesCount, int SeriesLength) : base(ID, Name, cover, repository)
+        public SerialViewModel(int ID, string Name, byte[] cover, int status, int estimation, IRepository repository, string Comment, int SeriesCount, int SeriesLength) : base(ID, cover, Name, status, estimation, repository)
         {
             this.Comment = Comment;
             this.SeriesCount = SeriesCount;

@@ -11,6 +11,7 @@ namespace Archivum.Interfaces
         int ID { get; set; }
         string Name { get; set; }
         public byte[] Cover { get; set; }
-
+        public int Status { get; set; }
+        public int Estimation { get; set; }
     }
 }

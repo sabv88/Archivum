@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Archivum.Views.Video.DroppedVideoListPage"
+             Title="DroppedVideoListPage"
+             xmlns:local="clr-namespace:Archivum.Logic">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Добавить" Order="Secondary" Command="{Binding AddItem}"/>
+        <ToolbarItem Text="Статистика" Order="Secondary"  Command="{Binding Statistick}"/>
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Resources>
+        <local:ImageConverter x:Key="imageConverter" />
+    </ContentPage.Resources>
+    
+    <Shell.TitleView >
+        <Picker SelectedItem="{Binding Filter}">
+            <Picker.Items>
+                <x:String>Все</x:String>
+                <x:String>Аниме</x:String>
+                <x:String>Фильм</x:String>
+                <x:String>Сериал</x:String>
+            </Picker.Items>
+        </Picker>
+    </Shell.TitleView>
+
+
+    <StackLayout>
+
+        <CollectionView
+                    ItemsSource="{Binding Collection}"
+                    SelectionMode="Single"
+                    SelectedItem="{Binding SelectedVM, Mode=TwoWay}"
+                    RemainingItemsThreshold ="1" RemainingItemsThresholdReachedCommand="{Binding NextItems}"
+                VerticalOptions="FillAndExpand">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Stroke="#C49B33"
+                    StrokeThickness="4"
+                    HorizontalOptions="FillAndExpand">
+
+                        <StackLayout>
+                            <Label HorizontalTextAlignment="Center" Text="{Binding Name}" FontSize="Large" HorizontalOptions="Center" />
+                        </StackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+</ContentPage>

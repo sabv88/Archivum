@@ -10,6 +10,35 @@ namespace Archivum.ViewModels
         public int ID { get; set; }
         public byte[] cover { get; set; } = new byte[0];
         internal string name;
+        internal int status;
+        internal int estimation;
+
+        public int Status
+        {
+            get => status;
+            set
+            {
+                if (status != value)
+                {
+                    status = value;
+                    OnPropertyChanged(nameof(Status));
+                }
+            }
+        }
+
+        public int Estimation 
+        {
+            get => estimation;
+            set
+            {
+                if (estimation != value)
+                {
+                    estimation = value;
+                    OnPropertyChanged(nameof(Estimation));
+                }
+            }
+        }
+
         public string Name
         {
             get => name;
@@ -23,18 +52,16 @@ namespace Archivum.ViewModels
             }
         }
 
-        public ImageSource Cover
+        public byte[] Cover
         {
-            get
+            get => cover;
+            set
             {
-                if (cover.Length == 0)
+                if (cover != value)
                 {
-                    return ImageSource.FromFile("picture1.svg");
+                    cover = value;
+                    OnPropertyChanged(nameof(Cover));
                 }
-
-                MemoryStream ms = new MemoryStream(cover);
-
-                return ImageSource.FromStream(() => ms);
             }
         }
 
@@ -42,11 +69,13 @@ namespace Archivum.ViewModels
 
         public BaseViewModel() { }
 
-        public BaseViewModel(int iD, byte[] cover, string name)
+        public BaseViewModel(int iD, byte[] cover, string name, int status, int estimation)
         {
             ID = iD;
             this.cover = cover;
             Name = name;
+            Status = status;
+            Estimation = estimation;
         }
 
         public BaseViewModel(IModel material)
@@ -54,6 +83,8 @@ namespace Archivum.ViewModels
             ID = material.ID;
             this.cover = material.Cover;
             Name = material.Name;
+            Status = material.Status;
+            Estimation = material.Estimation;
         }
 
         public void OnPropertyChanged(string propertyName)
@@ -79,6 +110,7 @@ namespace Archivum.ViewModels
                 MemoryStream memory = new MemoryStream();
                 await stream.CopyToAsync(memory);
                 cover = memory.ToArray();
+                OnPropertyChanged(nameof(Cover));
             }
         }
     }

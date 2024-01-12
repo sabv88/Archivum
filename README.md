@@ -11,18 +11,20 @@ First, make sure you have your Visual Studio and .NET 7 environment set up for .
 Once everything is set up, you can clone the repo and run the application via Visual Studio.
 
 ## Features
-—  **Add watched movies, anime, TV series, books read, manga and games played to different lists.** <br>
-
-<p align="center">
- <img src="https://github.com/sabv88/Archivum/assets/111075613/9fe5ba45-80cc-4a7a-91c6-8ff30ddcde3c" width="220">
-</p>
-
+— **Add watched movies, anime, TV series, books read, manga and games played to different lists.** <br>
 — **Filter data.**<br>
+— **View statistics and analytics on your media consumption.** <br>
+
 <p align="center">
- <img src="https://github.com/sabv88/Archivum/assets/111075613/031b87d9-d7fa-4518-bdcf-54c08e1285b3" width="220">
+ <img src="https://github.com/sabv88/Archivum/assets/111075613/a969fff5-941f-4f49-9e02-84a95a09434f" width="220">
+ <img src="https://github.com/sabv88/Archivum/assets/111075613/26f77309-143f-4941-8bb9-b85732bf38e4" width="220">
+ <img src="https://github.com/sabv88/Archivum/assets/111075613/dbfa46be-9ee5-46e2-9ed0-50e5e41c06d7" width="220">
+ <img src="https://github.com/sabv88/Archivum/assets/111075613/96679232-9501-424d-b892-c67682bc6ce0" width="220">
 </p>
 
-— **View statistics and analytics on your media consumption.** <br>
 <p align="center">
- <img src="https://github.com/sabv88/Archivum/assets/111075613/dda2e27d-64a7-48ac-af95-192d54613da5" width="220">
+ <img src="https://github.com/sabv88/Archivum/assets/111075613/dfec466c-9a4e-48a4-86c6-4fbe747c0077" width="220">
+ <img src="https://github.com/sabv88/Archivum/assets/111075613/c5b79de4-039d-4d79-9025-b68f7da22ee7" width="220">
+ <img src="https://github.com/sabv88/Archivum/assets/111075613/f72f8b56-e63b-434d-bcb3-d26405fcf1f0" width="220">
+ <img src="https://github.com/sabv88/Archivum/assets/111075613/eed82a10-7968-4cdb-b73e-69e2302394ff" width="220">
 </p>
